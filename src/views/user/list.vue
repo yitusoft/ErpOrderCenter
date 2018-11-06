@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         getUserList: function () {
-            request.get(baseConfig.server + "/api/user/getlist", { params: this.pageParms }).then(res => {
+            request.get(baseConfig.server + "/api/user/getlist", { params: this.searchData }).then(res => {
                 this.tableData = res.d;
                 this.searchData.total =res.t;
             });
@@ -102,4 +102,5 @@ export default {
 </script>
 <style lang="less">
 .userlist{height: 100%;}
+.pagination{text-align: right;}
 </style>
