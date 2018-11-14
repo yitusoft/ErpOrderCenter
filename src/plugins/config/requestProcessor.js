@@ -19,9 +19,9 @@ if (process.env.NODE_ENV === 'production') {
 api.interceptors.request.use(function (config) {
     loading = app.$loading({
         lock: true,
-        text: 'Loading',
+        text: '加载中....',
         spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0)'
+        background: 'rgba(0, 0, 0, 0.7)'
     })
     return config;
 }, function (error) {
@@ -34,7 +34,7 @@ api.interceptors.response.use(function (res) {
             return res.data;
         } else {
             msg = res.data.m;
-            app.$message.error(msg);
+            this.$message.error(msg);
         }
     }
     else {
@@ -42,7 +42,7 @@ api.interceptors.response.use(function (res) {
             case 404: msg = '请求方法错误'; break;
             default: msg = '请求失败'; break;
         }
-        app.$message.error(msg)
+        this.$message.error(msg)
     }
 }, function (error) {
     loading.close();

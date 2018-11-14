@@ -6,7 +6,7 @@ import Login from './views/user/login.vue'
 Vue.use(Router)
 
 let items = [
-  'user-list', 'user-edit'
+  'user-list', 'user-edit', 'user-edits'
 ]
 let routeArr = [];
 items.forEach(item => {

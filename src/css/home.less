@@ -1,3 +1,45 @@
+ //左右浮现
+.slide-fade-r-enter-active {
+    animation: show-in 1s;
+    transition: all 1s;
+    position: absolute;
+    z-index: 2000;
+  }
+  .slide-fade-r-leave-active {
+    animation: show-out 1s;
+    transition: all 1s;
+    position: absolute;
+    z-index: 2000;
+  }
+  .slide-fade-r-enter {
+    opacity: 1;
+    transform: translate(-260px, 0);
+  }
+  .slide-fade-r-leave-to {
+    opacity: 1;
+    position: absolute;
+    z-index: 2000;
+    transform: translate(-260px, 0);
+  }
+  
+  .slide-fade-l-enter-active {
+    animation: show-in 1.5s;
+    transition: all 1.5s;
+  }
+  .slide-fade-l-leave-active {
+    animation: show-out 0.5s;
+    transition: all 1s;
+  }
+  .slide-fade-l-enter {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  .slide-fade-l-leave-to {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  //左右浮现
+
 .site-menubar-email {
     margin-bottom: 0;
     font-size: 12px;
@@ -97,26 +139,26 @@ span a:hover {
   border-bottom: 1px solid #e0e0e0;
   margin: 0;
 }
-.avatar {
+.avatars {
   width: 2.143rem;
   position: relative;
   display: inline-block;
   white-space: nowrap;
   vertical-align: bottom;
   border-radius: 1000px;
-  float: left;
+//   float: left;
   color: #fff;
 }
-.avatar i {
+.avatars i {
   position: absolute;
   right: 0.7em;
   bottom: 0.9em;
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   border: 2px solid #fff;
   border-radius: 100%;
 }
-.avatar img {
+.avatars img {
   width: 100%;
   max-width: 80%;
   height: auto;
@@ -124,9 +166,38 @@ span a:hover {
   border-radius: 1000px;
   vertical-align: middle;
 }
-.avatar-online i {
-  background-color: #4caf50;
-}
+.avatars-online i {
+    background-color: #4caf50;
+  }
+  .avatar {
+    width: 3rem;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: bottom;
+    border-radius: 1000px;
+    color: #fff;
+  }
+.avatar img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 0 none;
+    border-radius: 1000px;
+    vertical-align: middle;
+  }
+  .avatar i {
+    position: absolute;
+    right: 0.09em;
+    bottom: 0.5em;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    border-radius: 100%;
+  }
+  .avatar-online i {
+    background-color: #4caf50;
+  }
 .badge-danger {
   padding: 3px 6px;
   font-weight: 500;
@@ -164,7 +235,37 @@ img {
     border-style: none;
 }
 .el-main {
-  background-color: #eceff1;
+  background-color: #fff;
   color: #333;
-  min-height: 787px;
+  min-height: 800px;
+}
+.navFlot {
+    width: 260px;
+    border-right: 1px solid rgb(228, 225, 225);
+    position: absolute;
+    z-index: 9999;
+    bottom: 44px;
+    top: 60px;
+}
+.title-name {
+    font-size: 24px;
+    color: #444444;
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: "黑体";
+}
+.header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eeeeee;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+body {
+    font-family: Tahoma,Helvetica,Arial,'宋体',sans-serif;
+    font-size: 12px;
+}
+table,table tr th, table tr td { border-bottom:1px solid #e4e7ed; }
+*{
+    padding: 0;
+    margin: 0;
 }

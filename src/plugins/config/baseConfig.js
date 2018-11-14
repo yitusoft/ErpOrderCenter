@@ -1,6 +1,14 @@
 let config = {
-    server: 'http://localhost:8001',
-    currentUser: null
+    server: 'http://localhost:1882',
+    currentUser: null,
+    wherePage: {
+        isCheck:true,
+        page: '',
+        searchWhere: null
+    },
+    uploadimage: '.jpeg,.gif,.png,.bmp',
+    uploadfile: '',
+    uploadall:''
 }
 
 if (process.env.NODE_ENV === 'production') {

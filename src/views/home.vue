@@ -1,11 +1,11 @@
 <template>
-<div  id="app">
+<div  id="app" >
 <el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" >
   <el-menu-item index="1">
     <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;"></i>
   </el-menu-item>
   <el-menu-item index="2">
-    <el-dropdown type="primary" trigger="click">
+    <el-dropdown type="primary" placement="bottom-start">
       <span class="avatar avatar-online" style="width: 4rem;">常用功能</span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>用户列表</el-dropdown-item>
@@ -14,7 +14,7 @@
     </el-dropdown>
   </el-menu-item>
   <el-menu-item index="3" style="float: right;">
-    <el-dropdown  type="primary"  trigger="click">
+    <el-dropdown  type="primary">
       <span class="el-dropdown-link">
         <i class="iconfont icon-email" style="color:#fff"></i>
         <span class="badge-danger backcolorblue">{{emailnumber}}</span>
@@ -31,7 +31,7 @@
         <div class="dropdown-divider" ></div>
         <div class="navtitle">
           <div class="navicon">
-            <i class="el-icon-tickets" style="color:#fff;padding-top: 0.3em;"></i>
+            <i class="el-icon-tickets" style="color:#fff;padding-top: 0.55em;"></i>
           </div>
           <div style="flot:right">
             <div>
@@ -42,7 +42,6 @@
             </div>
           </div>
         </div>
-        <div class="dropdown-divider" ></div>
         <div style="background-color: #eee;padding: 0.5em 0 1em 1.5em;">
           <span><a href="#" style="color:#9e9e9e;">全部</a></span>
           <span style="float: right;margin:0 1.5em 0 10em;;">
@@ -53,7 +52,7 @@
     </el-dropdown>
   </el-menu-item>
   <el-menu-item index="4" style="float: right;">
-    <el-dropdown  type="primary"  trigger="click">
+    <el-dropdown  type="primary">
       <span class="el-dropdown-link">
         <i class="iconfont icon-message" style="color:#fff;"></i>
         <span class="badge-danger backcolorred">{{messagenumber}}</span>
@@ -70,7 +69,7 @@
         <div class="dropdown-divider" ></div>
           <div class="navtitle">
           <div class="navicon">
-            <i class="el-icon-tickets" style="color:#fff;padding-top: 0.3em;"></i>
+            <i class="el-icon-tickets" style="color:#fff;padding-top: 0.55em;"></i>
           </div>
           <div style="flot:right">
             <div>
@@ -81,7 +80,6 @@
             </div>
           </div>
         </div>
-        <div class="dropdown-divider" ></div>
         <div style="background-color: #eee;padding: 0.5em 0 1em 1.5em;">
           <span><a href="#" style="color:#9e9e9e;">全部</a></span>
           <span style="float: right;margin:0 1.5em 0 10em;;">
@@ -93,68 +91,68 @@
    </el-menu-item>
 
   <el-menu-item index="5" style="float: right;">
-    <el-dropdown type="primary" trigger="click">
+    <el-dropdown type="primary" trigger="click" @command="handleCommand">
       <span class="avatar avatar-online"><img src="img/5.jpg"><i></i></span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
+        <el-dropdown-item command="updatepassword" ><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
         <div class="dropdown-divider"></div>
-        <el-dropdown-item><i class="iconfont icon-loginout" ></i> 登出</el-dropdown-item>
+        <el-dropdown-item command="loginout"><i class="iconfont icon-loginout"></i> 登出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu-item>
 </el-menu>
 <el-container>
-  
-  <el-main>
-    <div  :width="this.menuwidth" @mouseenter="mouseenter()" @mouseleave="mouseleave()" style="position: fixed;left: 0;top: 60px;z-index: 2000;width: 1px;height: 100%;">
-    <el-aside background-color="#eceff1" v-if="menushow" width="260px">
-      <div class="site-menubar-header">
-        <div class="cover overlay">
-          <img class="cover-image" src="img/login-background.jpg" alt="...">
-          <div class="overlay-panel vertical-align overlay-background">
-            <div style="margin-top: 14px;">
-              <a class="avatar" href="javascript:void(0)" style="width: 70px;" >
-                <img src="img/5.jpg" alt="">
-              </a>
-              <div class="site-menubar-info">
-                <h5 class="site-menubar-user">Machi</h5>
-                <p class="site-menubar-email">machidesign@gmail.com</p>
+    <div @mouseenter="mouseenter()" @mouseleave="mouseleave()" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
+      <transition name="slide-fade-r">
+      <el-aside v-show="menushow" :class="navflotcss" width="260px" translate>
+        <div class="site-menubar-header">
+          <div class="cover overlay">
+            <img class="cover-image" src="img/login-background.jpg" alt="...">
+            <div class="overlay-panel vertical-align overlay-background">
+              <div style="margin-top: -90px;">
+                <a class="avatars" href="javascript:void(0)" style="width: 70px;float: left;" >
+                  <img src="img/5.jpg" alt="">
+                </a>
+                <div class="site-menubar-info">
+                  <h5 class="site-menubar-user">Machi</h5>
+                  <p class="site-menubar-email">machidesign</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <el-menu
-      :default-active="$route.path"
-      class="el-menu-vertical-demo"
-      background-color="#ebeef5"
-      @select="handleSelect"
-      text-color="#606266"
-      active-text-color="#606266"
-      collapse-transition
-      unique-opened
-      style="position: fixed;bottom: 0;top: 200px;width: 260px;">
-        <el-submenu v-for="menu in menus" :key="menu.id" :index="menu.id">
-          <template slot="title">
-            <span>{{menu.name}}</span>
-          </template>
-          <el-menu-item v-for="c in menu.item" :key="c.route" :index="c.route">{{c.name}} </el-menu-item>         
-        </el-submenu>
-      </el-menu>
-    </el-aside>
-  </div>
-    <router-view />
+        <el-menu
+        :default-active="$route.path"
+        @select="handleSelect"
+        collapse-transition
+        unique-opened
+        style="border-right:none;"
+        >
+          <el-submenu v-for="menu in menus" :key="menu.id" :index="menu.id">
+            <template slot="title" style="padding-left: 3.5em;">
+              <i class="iconfont icon-email" style="margin: 0 1em 0 2em;"></i>
+              <span>{{menu.name}}</span>
+            </template>
+            <el-menu-item v-for="c in menu.item" :key="c.route" :index="c.route"  style="padding-left: 85px;">{{c.name}} </el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      </transition>
+    </div>
+  <el-main>
+    <router-view/>
   </el-main>
 </el-container>
-<el-footer>
+<el-footer height="44px"> 
   <div>© 2018 <a href="#">Remark</a>Crafted with <i class="red-600 icon md-favorite"></i> by <a href="#">Creation Studio</a></div>
 </el-footer>
 </div>
-
 </template>
 <script>
 import baseConfig from "@/plugins/config/baseConfig";
 import request from "@/plugins/config/requestProcessor";
+import "@/css/home.less";
+import "@/css/fonts/iconfont.less";
 import router from "@/router";
 export default {
   name: "home",
@@ -163,7 +161,7 @@ export default {
       isfixed: false,
       menushow: false,
       menushowcss: "iconfont icon-transversethree",
-      menuwidth: "1px",
+      navflotcss: "",
       user: baseConfig.currentUser,
       emailnumber: 1,
       messagenumber: 1,
@@ -187,12 +185,10 @@ export default {
       if (this.menushow) {
         this.menushow = false;
         this.menushowcss = "iconfont icon-transversethree";
-        this.menuwidth = "1px";
         this.isfixed = false;
       } else {
         this.menushow = true;
         this.menushowcss = "iconfont icon-left_arrow";
-        this.menuwidth = "260px";
         this.isfixed = true;
       }
     },
@@ -200,18 +196,31 @@ export default {
       if (!this.isfixed) {
         this.menushow = true;
         this.menushowcss = "iconfont icon-left_arrow";
-        this.menuwidth = "260px";
+        this.navflotcss = "navFlot";
       }
     },
     mouseleave: function() {
       if (!this.isfixed) {
         this.menushow = false;
         this.menushowcss = "iconfont icon-transversethree";
-        this.menuwidth = "1px";
+        this.navflotcss = "";
       }
+    },
+    handleCommand:function(val){
+        if(val==='loginout')
+        {
+          request.get(baseConfig.server + "/api/login/loginout").then(res => {
+            if(res.c===0)
+            {
+                baseConfig.currentUser=null;
+                router.push('login');
+            }
+          });
+        }
     }
   }
 };
 </script>
+
 
 
