@@ -66,7 +66,8 @@
         </el-pagination>
     </div>
     <transition name="slide-fade-l">
-      <div class="searchWhere" v-if="showSearchWhere" @mouseleave="mouseleave()" >
+      <!-- @mouseleave="mouseleave" -->
+      <div class="searchWhere" v-if="showSearchWhere"  >
           <div class="title"><span>筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" ></i></div>
           <div class="where">
             <div>账号</div>
@@ -203,6 +204,7 @@ export default {
           if (res.d.length > 0) {
             this.tableData = res.d;
             this.searchData.total = res.t;
+            this.showSearchWhere = false;
           } else {
             if (baseConfig.wherePage.searchWhere.pageindex > 1) {
               baseConfig.wherePage.searchWhere.pageindex -= 1;

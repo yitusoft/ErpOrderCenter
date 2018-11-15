@@ -102,9 +102,9 @@
   </el-menu-item>
 </el-menu>
 <el-container>
-    <div @mouseenter="mouseenter()" @mouseleave="mouseleave()" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
-      <transition name="slide-fade-r">
-      <el-aside v-show="menushow" :class="navflotcss" width="260px" translate>
+  <div @mouseenter="mouseenter()" @mouseleave="mouseleave()" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
+    <transition name="slide-fade-r">
+      <el-aside v-show="menushow" :class="navflotcss" style="background-color:#fff;min-height: 800px;border-right: 1px solid rgb(228, 225, 225);" width="260px" translate>
         <div class="site-menubar-header">
           <div class="cover overlay">
             <img class="cover-image" src="img/login-background.jpg" alt="...">
@@ -126,7 +126,7 @@
         @select="handleSelect"
         collapse-transition
         unique-opened
-        style="border-right:none;"
+        style="border-right:none;background-color:#fff"
         >
           <el-submenu v-for="menu in menus" :key="menu.id" :index="menu.id">
             <template slot="title" style="padding-left: 3.5em;">
@@ -137,8 +137,8 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      </transition>
-    </div>
+    </transition>
+  </div>
   <el-main>
     <router-view/>
   </el-main>
@@ -182,6 +182,7 @@ export default {
       router.push({ name: key });
     },
     changemenu: function() {
+      this.navflotcss = "";
       if (this.menushow) {
         this.menushow = false;
         this.menushowcss = "iconfont icon-transversethree";
@@ -203,7 +204,7 @@ export default {
       if (!this.isfixed) {
         this.menushow = false;
         this.menushowcss = "iconfont icon-transversethree";
-        this.navflotcss = "";
+        this.navflotcss = "navFlot";
       }
     },
     handleCommand:function(val){
