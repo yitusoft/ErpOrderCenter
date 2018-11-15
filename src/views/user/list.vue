@@ -82,11 +82,7 @@
       <useredit v-on:dialog_op="setDialog"></useredit>
     </el-dialog>
     <transition>
-        <rightmenucpt 
-          :contextMenuData="contextMenuData"
-	        @savedata="savedata"
-	        @newdata="newdata" 
-          ></rightmenucpt>
+        <rightmenucpt :contextMenuData="contextMenuData" v-on:savedata="savedata" v-on:newdata="newdata" ></rightmenucpt>
     </transition>
 </div>
 </template>

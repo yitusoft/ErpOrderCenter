@@ -1,5 +1,5 @@
 let config = {
-    server: 'http://localhost:1882',
+    server: 'http://localhost:8001',
     currentUser: null,
     wherePage: {
         isCheck:true,

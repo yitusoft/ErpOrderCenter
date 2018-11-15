@@ -4,12 +4,6 @@
       <div style="float: left;margin-top: 5px;"><span class="title-name">用户操作</span></div>
     </div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item prop="email" label="邮箱"
-        :rules="[
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ]">
-
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name" size="small"></el-input>
       </el-form-item>
