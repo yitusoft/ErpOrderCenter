@@ -1,20 +1,11 @@
 <template>
 <div  id="app" >
-<<<<<<< HEAD
 <el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" style="position: absolute;left: 0;right: 0;top: 0;z-index: 1000;height: 60px;line-height: 60px;overflow: hidden;" >
   <el-menu-item index="6">
     <img src="img/logo.png" >
   </el-menu-item>
   <el-menu-item index="1">
     <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;padding: 20px;"></i>
-=======
-  
-<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal">
-  <el-menu-item index="1"  style="padding-left:0;margin-left:0;"> <img src="/img/OrderCenterLogo.png"  />
-    </el-menu-item>
-  <el-menu-item index="2">
-    <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;"></i>
->>>>>>> a6697ced6b32bfee9c8a817f0a3b97788c96d109
   </el-menu-item>
   <el-menu-item index="4" style="float: right;">
     <el-dropdown  type="primary">
@@ -92,14 +83,8 @@
       </el-dropdown-menu> 
     </el-dropdown>
    </el-menu-item>
-<<<<<<< HEAD
   <el-menu-item index="5" style="float: right;">
     <el-dropdown type="primary" @command="handleCommand">
-=======
-
-  <el-menu-item index="6" style="float: right;">
-    <el-dropdown type="primary" trigger="click" @command="handleCommand">
->>>>>>> a6697ced6b32bfee9c8a817f0a3b97788c96d109
       <span class="avatar avatar-online"><img src="img/5.jpg"><i></i></span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="updatepassword" ><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
@@ -108,16 +93,9 @@
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu-item>
-<<<<<<< HEAD
   <el-menu-item index="2" style="float: right;">
     <el-dropdown type="primary" placement="bottom-start">
       <span class="avatar avatar-online" style="width: 5.5rem;line-height: 60px;height: 60px;padding-left: 10px;">常用功能</span>
-=======
-  
-  <el-menu-item index="7"  style="float: right;">
-    <el-dropdown type="primary">
-      <span class="avatar avatar-online" style="width: 4rem;">常用功能</span>
->>>>>>> a6697ced6b32bfee9c8a817f0a3b97788c96d109
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>用户列表</el-dropdown-item>
         <el-dropdown-item>订单管理</el-dropdown-item>
