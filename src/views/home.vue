@@ -1,19 +1,13 @@
 <template>
 <div  id="app" >
-<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" >
-  <el-menu-item index="1">
+  
+<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal">
+  <el-menu-item index="1"  style="padding-left:0;margin-left:0;"> <img src="/img/OrderCenterLogo.png"  />
+    </el-menu-item>
+  <el-menu-item index="2">
     <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;"></i>
   </el-menu-item>
-  <el-menu-item index="2">
-    <el-dropdown type="primary" placement="bottom-start">
-      <span class="avatar avatar-online" style="width: 4rem;">常用功能</span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>用户列表</el-dropdown-item>
-        <el-dropdown-item>订单管理</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-  </el-menu-item>
-  <el-menu-item index="3" style="float: right;">
+  <el-menu-item index="4" style="float: right;">
     <el-dropdown  type="primary">
       <span class="el-dropdown-link">
         <i class="iconfont icon-email" style="color:#fff"></i>
@@ -51,7 +45,7 @@
       </el-dropdown-menu> 
     </el-dropdown>
   </el-menu-item>
-  <el-menu-item index="4" style="float: right;">
+  <el-menu-item index="5" style="float: right;">
     <el-dropdown  type="primary">
       <span class="el-dropdown-link">
         <i class="iconfont icon-message" style="color:#fff;"></i>
@@ -90,13 +84,23 @@
     </el-dropdown>
    </el-menu-item>
 
-  <el-menu-item index="5" style="float: right;">
+  <el-menu-item index="6" style="float: right;">
     <el-dropdown type="primary" trigger="click" @command="handleCommand">
       <span class="avatar avatar-online"><img src="img/5.jpg"><i></i></span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="updatepassword" ><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
         <div class="dropdown-divider"></div>
         <el-dropdown-item command="loginout"><i class="iconfont icon-loginout"></i> 登出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </el-menu-item>
+  
+  <el-menu-item index="7"  style="float: right;">
+    <el-dropdown type="primary">
+      <span class="avatar avatar-online" style="width: 4rem;">常用功能</span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>用户列表</el-dropdown-item>
+        <el-dropdown-item>订单管理</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu-item>
@@ -148,6 +152,9 @@
 </el-footer>
 </div>
 </template>
+<style scoped>
+.el-menu--horizontal>.el-menu-item.is-active{border-bottom:none;}
+</style>
 <script>
 import baseConfig from "@/plugins/config/baseConfig";
 import request from "@/plugins/config/requestProcessor";
