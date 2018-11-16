@@ -1,12 +1,13 @@
 <template>
-<body class="page-login layout-full page-dark" style="background-color: transparent;" >
-    <div class="page vertical-align text-center">>
-      <div class="page-content vertical-align-middle">
+<div class="page-login layout-full page-dark" style="background-color: transparent;" >
+    <div class="page vertical-align text-center">
+      <div class="page-content vertical-align-middle" style="position:relative;">
+       <div class="login-area-bg"></div> 
+       <div class="login-area"> 
         <div class="brand">
-           <img class="brand-img" src="/img/logo.png" alt="..."> 
-          <h2 class="brand-text">Remark</h2>
+         <h2>订单管理系统</h2>
         </div>
-        <p>欢迎使用订单管理系统</p>
+        <!-- <p>欢迎使用订单管理系统</p> -->
         <form>
           <div class="form-group form-material floating">
             <input type="text" class="form-control empty" v-on:blur="isEmpty" v-model="loginForm.account" name="账号">
@@ -19,12 +20,12 @@
           <button type="button" @click="submitForm()" class="btn btn-primary btn-block">登录</button>
         </form>
         <div class="page-copyright page-copyright-inverse">
-          <p style="color: #fff;">DEB WEBSITE BY Creation Studio</p>
-          <p style="color: #fff;">© 2018. All RIGHT RESERVED.</p>
+          <p>© 2018 德贝实业All RIGHT RESERVED.</p>
         </div>
       </div>
+      </div>
     </div>
-  </body>
+  </div>
 </template>
 <script>
 import baseConfig from "@/plugins/config/baseConfig";
