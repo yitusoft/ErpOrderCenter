@@ -70,10 +70,10 @@
           type="file"  
           :size="filesize"  
           ></fileuploadcpt> 
-      <el-form-item>
+      <el-form-item  style="text-align: right;margin-right: 50px;">
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-        <el-button @click="cancelClick()">取消</el-button>
+        <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
+        <el-button @click="cancelClick()" type="info">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -221,4 +221,11 @@ export default {
   }
 };
 </script>
+<style lang="less">
+.useredit{
+  min-height: 93%;
+  padding: 20px 20px 0 20px;
+}
+</style>
+
 

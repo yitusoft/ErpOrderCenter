@@ -1,17 +1,11 @@
 <template>
 <div  id="app" >
-<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" >
-  <el-menu-item index="1">
-    <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;"></i>
+<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" style="position: absolute;left: 0;right: 0;top: 0;z-index: 1000;height: 60px;line-height: 60px;overflow: hidden;" >
+  <el-menu-item index="6">
+    <img src="img/logo.png" >
   </el-menu-item>
-  <el-menu-item index="2">
-    <el-dropdown type="primary" placement="bottom-start">
-      <span class="avatar avatar-online" style="width: 4rem;">常用功能</span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>用户列表</el-dropdown-item>
-        <el-dropdown-item>订单管理</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+  <el-menu-item index="1">
+    <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;padding: 20px;"></i>
   </el-menu-item>
   <el-menu-item index="3" style="float: right;">
     <el-dropdown  type="primary">
@@ -89,9 +83,8 @@
       </el-dropdown-menu> 
     </el-dropdown>
    </el-menu-item>
-
   <el-menu-item index="5" style="float: right;">
-    <el-dropdown type="primary" trigger="click" @command="handleCommand">
+    <el-dropdown type="primary" @command="handleCommand">
       <span class="avatar avatar-online"><img src="img/5.jpg"><i></i></span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="updatepassword" ><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
@@ -100,8 +93,17 @@
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu-item>
+  <el-menu-item index="2" style="float: right;">
+    <el-dropdown type="primary" placement="bottom-start">
+      <span class="avatar avatar-online" style="width: 5.5rem;line-height: 60px;height: 60px;padding-left: 10px;">常用功能</span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>用户列表</el-dropdown-item>
+        <el-dropdown-item>订单管理</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </el-menu-item>
 </el-menu>
-<el-container>
+<el-container style="position: absolute;bottom: 0;top: 60px;left: 0;right: 0;">
   <div @mouseenter="mouseenter()" @mouseleave="mouseleave()" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
     <transition name="slide-fade-r">
       <el-aside v-show="menushow" :class="navflotcss" style="background-color:#fff;min-height: 800px;border-right: 1px solid rgb(228, 225, 225);" width="260px" translate>
@@ -141,11 +143,11 @@
   </div>
   <el-main>
     <router-view/>
+    <el-footer height="20px"> 
+    <div>© 2018德贝实业版权所有</div>
+    </el-footer>
   </el-main>
 </el-container>
-<el-footer height="44px"> 
-  <div>© 2018 <a href="#">Remark</a>Crafted with <i class="red-600 icon md-favorite"></i> by <a href="#">Creation Studio</a></div>
-</el-footer>
 </div>
 </template>
 <script>

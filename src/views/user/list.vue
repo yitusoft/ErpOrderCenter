@@ -1,11 +1,13 @@
 <template>
 <div class="userlist">
     <div class="header">
-      <div style="float: left;margin-top: 5px;"><span class="title-name">用户管理</span></div>
+      <div style="float: left;">
+        <span class="title-name">用户管理</span>
+      </div>
       <div style="float: right;">
-        <el-button type="primary" size="medium" @click="addClick()">用户添加</el-button>
-        <el-button type="primary" size="medium" @click="dialogFormVisible = true">用户添加</el-button>
-        <el-button type="primary" size="medium" @click="showSearchWhere=true">筛选</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="addClick()">添加</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="dialogFormVisible = true">添加</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-conditions" @click="showSearchWhere=true">筛选</el-button>
         <el-button type="primary" size="medium" @click="isSingle = !isSingle">
           <span v-if="isSingle">单选</span><span v-else>多选</span>
           </el-button>
@@ -36,7 +38,7 @@
         </el-table-column>
         <el-table-column label="更多操作" width="100">
           <template slot-scope="scope">
-            <el-dropdown placement="left-start">
+            <el-dropdown placement="bottom-end">
               <span class="el-dropdown-link">操作</span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item><span @click="editClick(scope.row.id)">编辑</span></el-dropdown-item>
@@ -68,22 +70,23 @@
     <transition name="slide-fade-l">
       <!-- @mouseleave="mouseleave" -->
       <div class="searchWhere" v-if="showSearchWhere"  >
-          <div class="title"><span>筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" ></i></div>
+          <div class="title"><i :class="searchicon" ></i><span style="margin: 0 0 0 5px;font-family: monospace;font-size: 15px;font-weight: 600;">筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" style="font-weight: 600;" ></i></div>
           <div class="where">
             <div>账号</div>
             <el-input v-model="searchData.account" placeholder="请输入账号"></el-input>
             <addresssearchcpt v-on:addresssearch_val="setAddressSearch" :param="searchData.address"></addresssearchcpt>
           </div>
           <div class="button">
-              <el-button type="primary" @click="search(-1)">查询</el-button>
+            {{this.whereData}}
+            <el-button type="primary" icon="iconfont icon-search" size="medium" @click="search(-1)">搜索</el-button>
           </div>
       </div>
     </transition>
-    <el-dialog title="用户操作" :visible.sync="dialogFormVisible">
+    <el-dialog title="用户操作" :visible.sync="dialogFormVisible" z-index="9999">
       <useredit v-on:dialog_op="setDialog"></useredit>
     </el-dialog>
     <transition>
-        <rightmenucpt :contextMenuData="contextMenuData" v-on:savedata="savedata" v-on:newdata="newdata" ></rightmenucpt>
+        <rightmenucpt :contextMenuData="contextMenuData" v-on:editData="editData" v-on:addData="addData" ></rightmenucpt>
     </transition>
 </div>
 </template>
@@ -94,6 +97,7 @@ import router from "@/router";
 import useredit from "@/views/user/edit.vue";
 import addresssearchcpt from "@/components/addressSearch.vue";
 import rightmenucpt from "@/components/rightmenu.vue";
+import '@/css/list.less'
 export default {
   name: "userlist",
   components: {
@@ -131,6 +135,7 @@ export default {
       },
       showoperation: false,
       showoperationcss: "",
+      searchicon:"iconfont icon-condition",
       isSingle: true,
       tableData: [],
       selectItems: {},
@@ -145,6 +150,9 @@ export default {
         account: "",
         address: "",
         total: 0
+      },
+      whereData:{
+
       }
     };
   },
@@ -156,6 +164,8 @@ export default {
       alert("点击了修改");
     },
     rowcontextmenu: function(row, event) {
+      this.$refs.selectItems.clearSelection();
+      this.$refs.selectItems.toggleRowSelection(row);
       event.preventDefault();
       var x = event.clientX;
       var y = event.clientY;
@@ -183,6 +193,7 @@ export default {
       this.selectItems = val;
     },
     setAddressSearch: function(val) {
+      debugger
       this.searchData.address = val;
     },
     setDialog: function(val) {
@@ -253,36 +264,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-.userlist {
-  height: 100%;
-}
-.pagination {
-  text-align: right;
-  margin-top: 10px;
-}
-.searchWhere {
-  position: absolute;
-  top: 60px;
-  right: 0;
-  background-color: #fff;
-  bottom: 0;
-  z-index: 2000;
-  border-left: 1px solid rgb(230, 230, 230);
-  .title {
-    background-color: #f3f2f2;
-    padding: 10px 10px;
-    font-size: 15px;
-  }
-  i {
-    position: absolute;
-    right: 10px;
-  }
-  .where {
-    padding: 5px 10px;
-  }
-  .button {
-    text-align: center;
-  }
-}
-</style>

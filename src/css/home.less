@@ -1,3 +1,19 @@
+.el-menu--horizontal>.el-menu-item.is-active
+{
+  border-bottom:none;
+}
+ .el-menu-item{
+   padding: 0;
+   .el-dropdown{
+    .el-dropdown-link
+    {
+      padding: 20px;
+    }
+    .avatar{
+      margin: 0 10px;
+    }
+   }
+ }
  //左右浮现
 .slide-fade-r-enter-active {
     animation: show-in 1s;
@@ -224,8 +240,7 @@ span a:hover {
 .el-footer {
   color: #333;
   text-align: center;
-  height: 44px;
-  padding: 10px 30px;
+  padding: 5px 30px;
   background-color: #fff;
   border-top: 1px solid #e0e0e0;
   box-shadow: inset 0 0 44px #fff;
@@ -237,30 +252,27 @@ img {
 .el-main {
   background-color: #fff;
   color: #333;
-  min-height: 800px;
+  padding: 0;
+  margin: 0;
+  //min-height: 800px;
 }
 .navFlot {
     width: 260px;
     
     //box-shadow:2px 2px 2px #cccccc;
     position: absolute;
-    z-index: 9999;
-    bottom: 50px;
-    top: 60px;
-    background-color:#fff
+    z-index: 1000;
+    bottom:0;
+    top: 0;
+    background-color:#fff;
 }
-.title-name {
-    font-size: 24px;
-    color: #444444;
-    margin-right: 15px;
-    font-weight: bold;
-    font-family: "黑体";
-}
+
 .header {
-    padding-bottom: 5px;
     border-bottom: 1px solid #eeeeee;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    height: 60px;
+    line-height: 60px;
 }
 body {
     font-family: Tahoma,Helvetica,Arial,'宋体',sans-serif;

@@ -1,6 +1,6 @@
 <template>
-  <div class="useredit">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <div class="useredits">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
@@ -22,10 +22,10 @@
         <el-switch v-model="ruleForm.status"></el-switch>
       </el-form-item>
       <roleCpt v-on:role_val="setRole" :param="ruleForm.type" v-if="hackReset"></roleCpt>
-      <el-form-item>
+      <el-form-item style="text-align: right;margin-right: 50px;">
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-        <el-button @click="cancelClick()">取消</el-button>
+        <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
+        <el-button @click="cancelClick()" type="info">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
