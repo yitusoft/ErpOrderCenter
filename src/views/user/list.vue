@@ -4,10 +4,13 @@
       <div style="float: left;">
         <span class="title-name">用户管理</span>
       </div>
+      <div style="float: left;margin-left: 20px;">
+        <el-tag :key="tag" v-for="tag in whereTags" :disable-transitions="true">{{tag}}</el-tag>
+      </div>
       <div style="float: right;">
         <el-button type="primary" size="medium" icon="iconfont icon-add" @click="addClick()">添加</el-button>
         <el-button type="primary" size="medium" icon="iconfont icon-add" @click="dialogFormVisible = true">添加</el-button>
-        <el-button type="primary" size="medium" icon="iconfont icon-conditions" @click="showSearchWhere=true">筛选</el-button>
+        <el-button type="primary" size="medium" :icon="searchicon" @click="showSearchWhere=true">筛选</el-button>
         <el-button type="primary" size="medium" @click="isSingle = !isSingle">
           <span v-if="isSingle">单选</span><span v-else>多选</span>
           </el-button>
@@ -70,15 +73,14 @@
     <transition name="slide-fade-l">
       <!-- @mouseleave="mouseleave" -->
       <div class="searchWhere" v-if="showSearchWhere"  >
-          <div class="title"><i :class="searchicon" ></i><span style="margin: 0 0 0 5px;font-family: monospace;font-size: 15px;font-weight: 600;">筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" style="font-weight: 600;" ></i></div>
+          <div class="title"><i class="iconfont icon-conditions" ></i><span style="margin: 0 0 0 5px;font-family: monospace;font-size: 15px;font-weight: 600;">筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" style="font-weight: 600;" ></i></div>
           <div class="where">
             <div>账号</div>
-            <el-input v-model="searchData.account" placeholder="请输入账号"></el-input>
+            <el-input v-model="searchData.account" placeholder="请输入账号" clearable="true"></el-input>
             <addresssearchcpt v-on:addresssearch_val="setAddressSearch" :param="searchData.address"></addresssearchcpt>
           </div>
           <div class="button">
-            {{this.whereData}}
-            <el-button type="primary" icon="iconfont icon-search" size="medium" @click="search(-1)">搜索</el-button>
+            <el-button type="primary" icon="iconfont icon-search" size="medium" @click="search(0)">搜索</el-button>
           </div>
       </div>
     </transition>
@@ -86,7 +88,7 @@
       <useredit v-on:dialog_op="setDialog"></useredit>
     </el-dialog>
     <transition>
-        <rightmenucpt :contextMenuData="contextMenuData" v-on:editData="editData" v-on:addData="addData" ></rightmenucpt>
+        <rightmenucpt :contextMenuData="contextMenuData" v-on:editData="editData" v-on:addData="addData" v-on:deleteData="deleteData" ></rightmenucpt>
     </transition>
 </div>
 </template>
@@ -97,7 +99,7 @@ import router from "@/router";
 import useredit from "@/views/user/edit.vue";
 import addresssearchcpt from "@/components/addressSearch.vue";
 import rightmenucpt from "@/components/rightmenu.vue";
-import '@/css/list.less'
+import "@/css/list.less";
 export default {
   name: "userlist",
   components: {
@@ -122,20 +124,25 @@ export default {
         },
         menulists: [
           {
-            fnHandler: "addData", 
-            icoName: "el-icon-edit", 
+            fnHandler: "addData",
+            icoName: "iconfont icon-add",
             btnName: "新增"
           },
           {
             fnHandler: "editData",
-            icoName: "el-icon-edit",
+            icoName: "iconfont icon-edit",
             btnName: "修改"
+          },
+          {
+            fnHandler: "deleteData",
+            icoName: "iconfont icon-delete",
+            btnName: "删除"
           }
         ]
       },
       showoperation: false,
       showoperationcss: "",
-      searchicon:"iconfont icon-condition",
+      searchicon: "iconfont icon-condition",
       isSingle: true,
       tableData: [],
       selectItems: {},
@@ -143,6 +150,7 @@ export default {
       page: baseConfig.wherePage.page,
       dialogFormVisible: false,
       showSearchWhere: false,
+      noShowSearch:'pageIndex;pageSize;orderBy;total;',
       searchData: {
         pageIndex: 1,
         pageSize: 2,
@@ -151,25 +159,73 @@ export default {
         address: "",
         total: 0
       },
-      whereData:{
-
-      }
+      whereTags: [],
+      selectRowData:{}
     };
   },
+  watch: {
+    // "searchData.account": function(newVal) {
+    //   this.setTagChange(newVal,'account');
+    // },
+    // "searchData.address": function(newVal) {
+    //   this.setTagChange(newVal,'address');
+    // }
+  },
   methods: {
-    addData:function() {
-      alert("点击了新增");
+    setTagChange: function(newVal, oldVal) {
+      if (newVal) {
+        if (oldVal) {
+          this.whereTags[oldVal] = newVal;
+        } else {
+          this.whereTags.push(newVal);
+        }
+      } else {
+        if (oldVal) {
+          this.whereTags.splice(this.whereTags.indexOf(oldVal), 1);
+        }
+      }
+      // const oldTag = this.whereTags.filter(t => t.name == name);
+      // if (newVal) {
+      //   if (oldTag.length > 0) {
+      //     this.whereTags[this.whereTags.indexOf(oldTag[0])].value = newVal;
+      //   } else {
+      //     this.whereTags.push({ type: "", value: newVal, name: name });
+      //   }
+      // } else {
+      //   if (oldTag.length > 0) {
+      //     this.whereTags.splice(this.whereTags.indexOf(oldTag[0]), 1);
+      //   }
+      // }
     },
-    editData:function() {
-      alert("点击了修改");
+    onWhereTagDelete: function(tag) {
+      switch (tag.name) {
+        case "address":
+          this.searchData.address = "";
+          break;
+        case "account":
+          this.searchData.account = "";
+          break;
+      }
+      this.whereTags.splice(this.whereTags.indexOf(tag), 1);
+      this.search(0);
+    },
+    addData: function() {
+      alert("点击了新增"+this.selectRowData.account);
+    },
+    editData: function() {
+      alert("点击了修改"+this.selectRowData.account);
+    },
+    deleteData:function(){
+      alert("点击了删除"+this.selectRowData.account);
     },
     rowcontextmenu: function(row, event) {
+      event.preventDefault();
       this.$refs.selectItems.clearSelection();
       this.$refs.selectItems.toggleRowSelection(row);
-      event.preventDefault();
       var x = event.clientX;
       var y = event.clientY;
-      this.contextMenuData.axis = {x,y};
+      this.contextMenuData.axis = { x, y };
+      this.selectRowData =row;
     },
     rowclick: function(row) {
       if (this.isSingle) {
@@ -193,7 +249,6 @@ export default {
       this.selectItems = val;
     },
     setAddressSearch: function(val) {
-      debugger
       this.searchData.address = val;
     },
     setDialog: function(val) {
@@ -204,6 +259,16 @@ export default {
         this.search(0);
       }
     },
+    setTags: function(data) {
+      this.whereTags = [];
+      for (var item in data) {
+        if (this.noShowSearch.indexOf(item + ";") == -1) {
+          if (data[item]) {
+            this.whereTags.push(data[item]);
+          }
+        }
+      }
+    },
     search: function(num) {
       baseConfig.wherePage.page = "userlist";
       var whereData = {};
@@ -211,7 +276,10 @@ export default {
         baseConfig.wherePage.searchWhere = this.searchData;
       }
       whereData = baseConfig.wherePage.searchWhere;
-      request.post(baseConfig.server + "/api/user/getlist", whereData).then(res => {
+      this.setTags(whereData);
+      request
+        .post(baseConfig.server + "/api/user/getlist", whereData)
+        .then(res => {
           if (res.d.length > 0) {
             this.tableData = res.d;
             this.searchData.total = res.t;
@@ -220,6 +288,10 @@ export default {
             if (baseConfig.wherePage.searchWhere.pageindex > 1) {
               baseConfig.wherePage.searchWhere.pageindex -= 1;
               this.search(1);
+            } else {
+              this.tableData = res.d;
+              this.searchData.total = res.t;
+              this.showSearchWhere = false;
             }
           }
         });
@@ -231,7 +303,9 @@ export default {
       router.push({ name: "user-edits" });
     },
     deleteClick: function(id) {
-      request.get(baseConfig.server + "/api/user/delete", { params: { id: id } }).then(res => {
+      request
+        .get(baseConfig.server + "/api/user/delete", { params: { id: id } })
+        .then(res => {
           if (res.c === 0) {
             this.$message({
               showClose: true,
@@ -248,7 +322,7 @@ export default {
           }
         });
     },
-    
+
     handleSizeChange(val) {
       baseConfig.wherePage.searchWhere.pageSize = val;
       this.search(1);

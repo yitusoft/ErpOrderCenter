@@ -16,6 +16,7 @@
         default () {
           return {
             menuName: null,
+            
             axis: {
               x: null,
               y: null
@@ -77,8 +78,8 @@
     left: 0;
   }
   .vue-contextmenu-listWrapper .context-menu-list {
-    width: 100px;
-    height: 32px;
+    width: 75px;
+    height: 30px;
     border-radius: 4px;
     background: #F3F3F3;
     text-decoration: none;
@@ -96,7 +97,8 @@
     float: left;
   }
   .vue-contextmenu-listWrapper .context-menu-list button i{
-    padding: 0 5px 0 10px;
+    font-size: 8px;
+    /* padding: 0 5px 0 10px; */
   }
   .vue-contextmenu-listWrapper .context-menu-list button:hover {
     box-shadow: 0px 1px 3px rgba(34, 25, 25, 0.2);

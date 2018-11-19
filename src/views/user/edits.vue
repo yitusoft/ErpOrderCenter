@@ -70,7 +70,7 @@
           type="file"  
           :size="filesize"  
           ></fileuploadcpt> 
-      <el-form-item  style="text-align: right;margin-right: 50px;">
+      <el-form-item class="operation">
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
         <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         <el-button @click="cancelClick()" type="info">取消</el-button>
@@ -85,6 +85,7 @@ import router from "@/router";
 import addressCpt from "@/components/address.vue";
 import roleCpt from "@/components/role.vue";
 import fileuploadcpt from "@/components/fileupload.vue";
+import '@/css/edit.less'
 export default {
   name: "useredit",
   components: {
