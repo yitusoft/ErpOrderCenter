@@ -1,11 +1,11 @@
 <template>
 <div class="home" >
-<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" style="position: absolute;left: 0;right: 0;top: 0;z-index: 1000;height: 60px;line-height: 60px;overflow: hidden;border: 0;box-shadow: 2px 2px 2px #797ca2;" >
+<el-menu background-color="#3F51B5" text-color="#fff"  class="el-menu-demo" mode="horizontal" style="border:none;position: absolute;left: 0;right: 0;top: 0;z-index: 1000;height: 60px;line-height: 60px;overflow: hidden;border: 0;box-shadow: 2px 2px 2px #797ca2;" >
   <el-menu-item index="6">
     <img src="img/logo.png" >
   </el-menu-item>
-  <el-menu-item index="1">
-    <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;padding: 20px;"></i>
+    <el-menu-item>
+    <i :class="this.menushowcss" @click="changemenu()" style="color:#fff;font-size: 20px;padding:20px 10px;"></i>
   </el-menu-item>
 <el-menu-item index="5" style="float: right;margin-right: 10px;">
     <el-dropdown type="primary" @command="handleCommand">
@@ -55,7 +55,7 @@
       </el-dropdown-menu> 
     </el-dropdown>
   </el-menu-item>
-  <el-menu-item index="5" style="float: right;">
+  <el-menu-item style="float: right;">
     <el-dropdown  type="primary">
       <span class="el-dropdown-link">
         <i class="iconfont icon-message" style="color:#fff;"></i>
