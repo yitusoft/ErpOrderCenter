@@ -84,7 +84,7 @@
           </div>
       </div>
     </transition>
-    <el-dialog title="用户操作" :visible.sync="dialogFormVisible" z-index="9999">
+    <el-dialog title="用户操作" :visible.sync="dialogFormVisible">
       <useredit v-on:dialog_op="setDialog"></useredit>
     </el-dialog>
     <transition>
