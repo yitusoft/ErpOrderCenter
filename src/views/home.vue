@@ -151,7 +151,9 @@
 </div>
 </template>
 <style scoped>
-.el-menu--horizontal>.el-menu-item.is-active{border-bottom:none;}
+.el-menu--horizontal > .el-menu-item.is-active {
+  border-bottom: none;
+}
 </style>
 <script>
 import baseConfig from "@/plugins/config/baseConfig";
@@ -212,17 +214,15 @@ export default {
         this.navflotcss = "navFlot";
       }
     },
-    handleCommand:function(val){
-        if(val==='loginout')
-        {
-          request.get(baseConfig.server + "/api/login/loginout").then(res => {
-            if(res.c===0)
-            {
-                baseConfig.currentUser=null;
-                router.push('login');
-            }
-          });
-        }
+    handleCommand: function(val) {
+      if (val === "loginout") {
+        request.get(baseConfig.server + "/api/login/loginout").then(res => {
+          if (res.c === 0) {
+            baseConfig.currentUser = null;
+            router.push("login");
+          }
+        });
+      }
     }
   }
 };

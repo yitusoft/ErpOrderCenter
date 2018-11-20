@@ -35,9 +35,9 @@ import baseConfig from "@/plugins/config/baseConfig";
 import request from "@/plugins/config/requestProcessor";
 import addressCpt from "@/components/address.vue";
 import roleCpt from "@/components/role.vue";
-import '@/css/edit.less'
+import "@/css/edit.less";
 export default {
-  name: "useredits",
+  name      : "useredits",
   components: {
     addressCpt,
     roleCpt
@@ -45,7 +45,11 @@ export default {
   created: function() {
     if (this.$route.params.id) {
       this.ruleForm.id = this.$route.params.id;
-      request.get(baseConfig.server + "/api/user/getmodel", {params: { id: this.ruleForm.id }}).then(res => {
+      request
+        .get(baseConfig.server + "/api/user/getmodel", {
+          params: { id: this.ruleForm.id }
+        })
+        .then(res => {
           this.ruleForm = res.d;
         });
     }
@@ -59,17 +63,17 @@ export default {
       }
     };
     return {
-      dialogFormVisible:true,
-      hackReset: true,
-      ruleForm: {
-        id: "",
-        name: "",
-        account: "",
-        age: 0,
-        address: "",
+      dialogFormVisible: true,
+      hackReset        : true,
+      ruleForm         : {
+        id        : "",
+        name      : "",
+        account   : "",
+        age       : 0,
+        address   : "",
         createDate: "",
-        status: true,
-        type: ""
+        status    : true,
+        type      : ""
       },
       rules: {
         name: [
@@ -80,42 +84,58 @@ export default {
           { required: true, message: "请输入账号", trigger: "blur" },
           { min: 5, max: 20, message: "长度在 5 到 20 个字符", trigger: "blur" }
         ],
-        age: [{ validator: checkAge, trigger: "blur" }],
-        address: [{ required: true, message: "请选择区域", trigger: "change" }],
+        age       : [{ validator: checkAge, trigger: "blur" }],
+        address   : [{ required: true, message: "请选择区域", trigger: "change" }],
         createDate: [
           {
             required: true,
-            message: "请选择日期",
-            trigger: "blur"
+            message : "请选择日期",
+            trigger : "blur"
           }
         ],
-        type: [{required: true,message: "请至少选择一个权限",trigger: "change"}]
+        type: [
+          { required: true, message: "请至少选择一个权限", trigger: "change" }
+        ]
       }
     };
   },
   computed: {},
-  methods: {
+  methods : {
     setAddress: function(val) {
       this.ruleForm.address = val;
     },
     setRole: function(val) {
       this.ruleForm.type = val;
-      this.$refs['ruleForm'].validateField('type');
+      this.$refs["ruleForm"].validateField("type");
     },
     submitForm: function(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.ruleForm.types = JSON.stringify(this.ruleForm.type);
-          request.post(baseConfig.server + '/api/user/operation', this.ruleForm).then(res => {
+          request
+            .post(baseConfig.server + "/api/user/operation", this.ruleForm)
+            .then(res => {
               if (res.c === 0) {
-                this.$emit("dialog_op",2);
-                this.$message({showClose: true,message: '操作成功',type: 'success'});
+                this.$emit("dialog_op", 2);
+                this.$message({
+                  showClose: true,
+                  message  : "操作成功",
+                  type     : "success"
+                });
               } else {
-                this.$message({showClose: true,message: '操作失败',type: 'error'});
+                this.$message({
+                  showClose: true,
+                  message  : "操作失败",
+                  type     : "error"
+                });
               }
             });
         } else {
-          this.$message({showClose: true,message: '验证未通过',type: 'warning'});
+          this.$message({
+            showClose: true,
+            message  : "验证未通过",
+            type     : "warning"
+          });
           return false;
         }
       });
@@ -128,11 +148,10 @@ export default {
       this.reload();
       this.$refs[formName].resetFields();
     },
-    replacement: function() {
-    },
+    replacement: function() {},
     cancelClick: function() {
-      this.$emit("dialog_op",1);
-     //this.$root.dialogFormVisible = false
+      this.$emit("dialog_op", 1);
+      //this.$root.dialogFormVisible = false
       //router.go(-1);
     }
   }

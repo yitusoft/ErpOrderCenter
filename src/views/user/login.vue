@@ -35,39 +35,39 @@ import "@/css/bootstrap-extend.less";
 import "@/css/site.less";
 import "@/css/login.less";
 export default {
-  name: "login",
+  name   : "login",
   created: function() {
     this.isEmpty();
   },
   data: function() {
     return {
-      isAccountEmpty: "",
+      isAccountEmpty : "",
       isPasswordEmpty: "",
-      loginForm: {
-        account: "admin",
+      loginForm      : {
+        account : "admin",
         password: "11111"
       }
     };
   },
   methods: {
     submitForm: function() {
-      var bl =true;
-      if(!this.loginForm.account)
-      {
-        this.$message({message: '账号不能为空！',type: 'warning'});
-        bl=false;
+      var bl = true;
+      if (!this.loginForm.account) {
+        this.$message({ message: "账号不能为空！", type: "warning" });
+        bl = false;
+      } else if (!this.loginForm.password) {
+        this.$message({ message: "密码不能为空！", type: "warning" });
+        bl = false;
       }
-      else if(!this.loginForm.password)
-      {
-        this.$message({message: '密码不能为空！',type: 'warning'});
-        bl=false;
-      }
-      if(bl)
-      {
-        request.get(baseConfig.server + "/api/login/Login", {params: this.loginForm}).then(res => {
-          baseConfig.currentUser = res.d;
-          this.$router.push({ name: "home" });
-        });
+      if (bl) {
+        request
+          .get(baseConfig.server + "/api/login/Login", {
+            params: this.loginForm
+          })
+          .then(res => {
+            baseConfig.currentUser = res.d;
+            this.$router.push({ name: "home" });
+          });
       }
       return bl;
     },

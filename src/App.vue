@@ -5,7 +5,7 @@
 </template>
 <script>
 import baseConfig from "@/plugins/config/baseConfig";
-import router from "@/router"
+import router from "@/router";
 export default {
   name: "app",
   created() {
