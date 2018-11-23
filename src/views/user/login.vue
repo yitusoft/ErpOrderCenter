@@ -51,23 +51,21 @@ export default {
   },
   methods: {
     onSubmitForm: function() {
-      var bl =true;
-      if(!this.loginForm.account)
-      {
-        this.$message({message: '账号不能为空！',type: 'warning'});
-        bl=false;
+      var bl = true;
+      if (!this.loginForm.account) {
+        this.$message({ message: "账号不能为空！", type: "warning" });
+        bl = false;
+      } else if (!this.loginForm.password) {
+        this.$message({ message: "密码不能为空！", type: "warning" });
+        bl = false;
       }
-      else if(!this.loginForm.password)
-      {
-        this.$message({message: '密码不能为空！',type: 'warning'});
-        bl=false;
-      }
-      if(bl)
-      {
-        request.get(basics.server + "/api/login/login", {params: this.loginForm}).then(res => {
-          basics.currentUser = res.d;
-          this.$router.push({ name: "Home" });
-        });
+      if (bl) {
+        request
+          .get(basics.server + "/api/login/login", { params: this.loginForm })
+          .then(res => {
+            basics.currentUser = res.d;
+            this.$router.push({ name: "Home" });
+          });
       }
       return bl;
     },

@@ -75,13 +75,13 @@ export default {
           { required: true, message: "请输入账号", trigger: "blur" },
           { min: 5, max: 20, message: "长度在 5 到 20 个字符", trigger: "blur" }
         ],
-        age: [{ validator: checkAge, trigger: "blur" }],
-        address: [{ required: true, message: "请选择区域", trigger: "change" }],
+        age       : [{ validator: checkAge, trigger: "blur" }],
+        address   : [{ required: true, message: "请选择区域", trigger: "change" }],
         createDate: [
           {
             required: true,
-            message: "请选择日期",
-            trigger: "blur"
+            message : "请选择日期",
+            trigger : "blur"
           }
         ],
         type: [

@@ -1,0 +1,138 @@
+.el-table td
+{
+  line-height: 40px;
+  height: 40px;
+  padding: 0;
+  font-family: monospace;
+}
+.el-table th
+{
+  line-height: 45px;
+  height: 45px;
+  padding: 0;
+  font-family: monospace;
+  color: #616060;
+}
+.userlist {
+  /* min-height: 95%; */
+   padding: 0 20px;
+  display: flex;
+  height: calc(100vh - 60px - 33px);
+  .content{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    .header {
+      border-bottom: 1px solid #eeeeee;
+      overflow: hidden;
+      margin: 10px 0;
+      height: 60px;
+      line-height: 60px;
+      min-height: 60px;
+    }
+    .table-wrap{
+      overflow: auto;
+    }
+    .pagination {
+      text-align: right;
+      margin-top: 10px;
+      min-height: 32px;
+    }
+  }
+}
+.searchWhere {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #fff;
+  bottom: 33px;
+  z-index: 1001;
+  border-left: 1px solid rgb(230, 230, 230);
+  .title {
+    background-color: #f3f2f2;
+    padding: 10px 10px;
+    font-size: 15px;
+    .icon-close {
+      position: absolute;
+      right: 10px;
+    }
+    .icon-lockpage {
+      position: absolute;
+      right: 20px;
+      font-size: 20px;
+    }
+    .icon-notlockpage {
+      position: absolute;
+      right: 20px;
+      font-size: 20px;
+    }
+    .icon-min {
+      position: absolute;
+      right: 45px;
+      font-size: 18px;
+    }
+  }
+  .where {
+    padding: 5px 10px;
+  }
+  .button {
+    text-align: center;
+  }
+}
+.title-name {
+    font-size: 24px;
+    color: #444444;
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: "黑体";
+}
+.title-names {
+    font-size: 20px;
+    color: #444444;
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: "黑体";
+}
+.el-button{
+  i{
+    padding-right: 5px;
+  }
+}
+.el-tag{
+  margin-left: 10px;
+}
+.el-dialog__header{
+  padding: 20px 20px 10px;
+  background-color: #e4e4e4;
+}
+.el-dialog__headerbtn .el-dialog__close
+{
+  color: #909399;
+  font-size: 20px;
+}
+.searchWhereMask{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color:#fff;
+  opacity:0.1;
+  z-index: 1000;
+}
+//弹窗样式
+.el-dialog
+{
+  width: 60%;
+  .el-dialog__header{
+    padding: 10px 20px 10px;
+    background-color: #e4e4e4;
+    .el-dialog__headerbtn{
+      top:10px;
+    }
+  }
+  .el-dialog__body{
+    padding:0;
+  };
+}

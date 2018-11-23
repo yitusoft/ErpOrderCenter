@@ -5,7 +5,7 @@
 </template>
 <script>
 import basics from "@/config/basics";
-import router from "@/router"
+import router from "@/router";
 export default {
   name: "app",
   created() {

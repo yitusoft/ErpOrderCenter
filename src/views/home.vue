@@ -208,17 +208,15 @@ export default {
         this.menuShowCss = "iconfont icon-transversethree";
       }
     },
-    onCommand:function(val){
-        if(val==='loginout')
-        {
-          request.get(basics.server + "/api/login/loginout").then(res => {
-            if(res.c===0)
-            {
-                basics.currentUser=null;
-                router.push('Login');
-            }
-          });
-        }
+    onCommand: function(val) {
+      if (val === "loginout") {
+        request.get(basics.server + "/api/login/loginout").then(res => {
+          if (res.c === 0) {
+            basics.currentUser = null;
+            router.push("Login");
+          }
+        });
+      }
     }
   }
 };
