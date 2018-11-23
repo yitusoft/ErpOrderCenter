@@ -1,118 +1,118 @@
 <template>
 <div class="userlist">
+  <div class="content">
     <div class="header">
       <div style="float: left;">
         <span class="title-name">用户管理</span>
       </div>
       <div style="float: left;margin-left: 20px;">
         <el-tag :key="tag" v-for="tag in whereTags" :disable-transitions="true">{{tag}}</el-tag>
+        <el-button type="text" v-if="whereTags.length>0" @click="onClearWhere" size="mini" round style="margin-left: 10px;">清空</el-button>
       </div>
       <div style="float: right;">
-        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="addClick()">添加</el-button>
-        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="dialogFormVisible = true">添加</el-button>
-        <el-button type="primary" size="medium" :icon="searchicon" @click="showSearchWhere=true">筛选</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="onAddClick()">添加</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-add" @click="onAddClicks()">添加</el-button>
+        <el-button type="primary" size="medium" icon="iconfont icon-condition" @click="showSearchWhere=true">筛选</el-button>
         <el-button type="primary" size="medium" @click="isSingle = !isSingle">
           <span v-if="isSingle">单选</span><span v-else>多选</span>
           </el-button>
       </div>
     </div>
-    <el-table :data="tableData" border="true" 
-      :header-cell-style="{background:'#EEEEEE'}" 
-      @selection-change="handleSelectionChange"
-      :default-sort = "{prop: 'age', order: 'descending'}"
-      @sort-change="sortchange"
-      @row-click="rowclick"
-      ref="selectItems"
-      @row-contextmenu="rowcontextmenu"
-      >
-        <el-table-column type="selection" width="55">
-        </el-table-column>
-        <el-table-column type="index" label="序号" width="70">
-        </el-table-column>
-        <el-table-column prop="account" label="账号">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="address" label="地址" >
-        </el-table-column>
-        <el-table-column prop="age" label="年龄" width="100" sortable="custom">
-        </el-table-column>
-        <el-table-column prop="createDate" label="创建时间">
-        </el-table-column>
-        <el-table-column label="更多操作" width="100">
-          <template slot-scope="scope">
-            <el-dropdown placement="bottom-end">
-              <span class="el-dropdown-link">操作</span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item><span @click="editClick(scope.row.id)">编辑</span></el-dropdown-item>
-                <el-dropdown-item ><span @click="deleteClick(scope.row.id)">删除</span></el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
+    <div class="table-wrap">
+      <el-table 
+        ref="selectList"
+        :data="tableData" 
+        :default-sort = "{prop: 'age', order: 'descending'}"
+        :header-cell-style="{background:'#EEEEEE'}" 
+        @selection-change="onSelectionChange"
+        @sort-change="onSortChange"
+        @row-click="onRowClick"
+        @row-contextmenu="onRowContextMenu"
+        border="true" 
+        >
+          <el-table-column type="selection" width="55">
+          </el-table-column>
+          <el-table-column type="index" label="序号" width="70">
+          </el-table-column>
+          <el-table-column prop="account" label="账号">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名">
+          </el-table-column>
+          <el-table-column prop="address" label="地址" >
+          </el-table-column>
+          <el-table-column prop="age" label="年龄" width="100" sortable="custom">
+          </el-table-column>
+          <el-table-column prop="createDate" label="创建时间">
+          </el-table-column>
+          <el-table-column label="更多操作" width="100">
             <template slot-scope="scope">
-                <el-button @click="editClick(scope.row.id)" type="text" size="small">编辑</el-button>
-                <el-button @click="deleteClick(scope.row.id)" type="text" size="small">删除</el-button>
+              <el-dropdown placement="bottom-end">
+                <span class="el-dropdown-link">操作</span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item><span @click="editClick(scope.row.id)">编辑</span></el-dropdown-item>
+                  <el-dropdown-item ><span @click="deleteClick(scope.row.id)">删除</span></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
-        </el-table-column>
-    </el-table>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="100">
+              <template slot-scope="scope">
+                  <el-button @click="onEditClick(scope.row.id)" type="text" size="small">编辑</el-button>
+                  <el-button @click="onDeleteClick(scope.row.id)" type="text" size="small">删除</el-button>
+              </template>
+          </el-table-column>
+      </el-table>
+    </div>
     <div class="pagination">
         <el-pagination 
-          @size-change="handleSizeChange" 
-          @current-change="handleCurrentChange" 
+          @size-change="onListSizeChange" 
+          @current-change="onListIndexChange" 
           :current-page="searchData.pageindex"
           prev-text="上一页"
           next-text="下一页"
-          :page-sizes="[2, 20, 30, 40]" 
+          :page-sizes="[10, 20, 30, 40]" 
           :page-size="searchData.pageSize" 
           layout="total, sizes, prev, pager, next, jumper"
           :total="searchData.total">
         </el-pagination>
     </div>
+  </div>
     <transition name="slide-fade-l">
-      <!-- @mouseleave="mouseleave" -->
-      <div class="searchWhere" v-if="showSearchWhere"  >
-          <div class="title"><i class="iconfont icon-conditions" ></i><span style="margin: 0 0 0 5px;font-family: monospace;font-size: 15px;font-weight: 600;">筛选</span><i @click="showSearchWhere=false" class="iconfont icon-close" style="font-weight: 600;" ></i></div>
+      <div class="searchWhere" v-if="showSearchWhere" >
+          <div class="title"><i class="iconfont icon-conditions" ></i><span style="margin: 0 0 0 5px;font-family: monospace;font-size: 15px;font-weight: 600;">筛选</span><i @click="onSearchWhereFixed" class="iconfont icon-notlockpage" ref="lockSearch" title="锁定" ></i></div>
           <div class="where">
             <div>账号</div>
             <el-input v-model="searchData.account" placeholder="请输入账号" clearable="true"></el-input>
-            <addresssearchcpt v-on:addresssearch_val="setAddressSearch" :param="searchData.address"></addresssearchcpt>
+            <addressitem v-on:setAddressSearch="setAddressSearch" :param="searchData.address"></addressitem>
           </div>
           <div class="button">
-            <el-button type="primary" icon="iconfont icon-search" size="medium" @click="search(0)">搜索</el-button>
+            <el-button type="primary" icon="iconfont icon-search" size="medium" @click="getDataList(0)">搜索</el-button>
           </div>
       </div>
     </transition>
-    <el-dialog title="用户操作" :visible.sync="dialogFormVisible">
-      <useredit v-on:dialog_op="setDialog"></useredit>
+    <el-dialog title="用户操作" :visible.sync="dialogFormVisible" >
+      <useredit v-on:setEditDialog="setEditDialog" v-if="dialogFormVisible" ></useredit>
     </el-dialog>
     <transition>
-        <rightmenucpt :contextMenuData="contextMenuData" v-on:editData="editData" v-on:addData="addData" v-on:deleteData="deleteData" ></rightmenucpt>
+        <rightmenuitem :contextMenuData="contextMenuData" v-on:onEditData="onEditData" v-on:onAddData="onAddData" v-on:onDeleteData="onDeleteData" ></rightmenuitem>
     </transition>
+    <div v-if="showSearchWhere&!lockSearch" @click="onClickMask" class="searchWhereMask"></div>
 </div>
 </template>
 <script>
-import baseConfig from "@/plugins/config/baseConfig";
-import request from "@/plugins/config/requestProcessor";
+import basics from "@/config/basics";
+import request from "@/plugins/processor/request";
 import router from "@/router";
-import useredit from "@/views/user/edit.vue";
-import addresssearchcpt from "@/components/addressSearch.vue";
-import rightmenucpt from "@/components/rightmenu.vue";
-import "@/css/list.less";
+import useredit from "@/views/user/Edit.vue";
+import addressitem from "@/components/search/AddressItem.vue";
+import rightmenuitem from "@/components/opration/RightMenuItem.vue";
+import "@/assets/theme/list.less";
 export default {
   name: "userlist",
   components: {
     useredit,
-    addresssearchcpt,
-    rightmenucpt
-  },
-  created: function() {
-    if (this.isCheck && this.page == "userlist") {
-      this.searchData = baseConfig.wherePage.searchWhere;
-    } else {
-      baseConfig.wherePage.searchWhere = this.searchData;
-    }
+    addressitem,
+    rightmenuitem
   },
   data: function() {
     return {
@@ -122,189 +122,177 @@ export default {
           x: null,
           y: null
         },
-        menulists: [
+        menuLists: [
           {
-            fnHandler: "addData",
+            onClick: "onAddData",
             icoName: "iconfont icon-add",
             btnName: "新增"
           },
           {
-            fnHandler: "editData",
+            onClick: "onEditData",
             icoName: "iconfont icon-edit",
             btnName: "修改"
           },
           {
-            fnHandler: "deleteData",
+            onClick: "onDeleteData",
             icoName: "iconfont icon-delete",
             btnName: "删除"
           }
         ]
       },
-      showoperation: false,
-      showoperationcss: "",
-      searchicon: "iconfont icon-condition",
       isSingle: true,
       tableData: [],
       selectItems: {},
-      isCheck: baseConfig.wherePage.isCheck,
-      page: baseConfig.wherePage.page,
+      isCheck: basics.wherePage.isCheck,
+      page: basics.wherePage.page,
       dialogFormVisible: false,
       showSearchWhere: false,
-      noShowSearch:'pageIndex;pageSize;orderBy;total;',
+      noShowSearch: "pageindex;pagesize;orderby;total;",
       searchData: {
         pageIndex: 1,
-        pageSize: 2,
+        pageSize: 10,
         orderBy: "",
         account: "",
         address: "",
         total: 0
       },
       whereTags: [],
-      selectRowData:{}
+      selectRowData: {},
+      lockSearch: false
     };
   },
-  watch: {
-    // "searchData.account": function(newVal) {
-    //   this.setTagChange(newVal,'account');
-    // },
-    // "searchData.address": function(newVal) {
-    //   this.setTagChange(newVal,'address');
-    // }
+  created: function() {
+    if (this.isCheck && this.page == "userlist") {
+      this.searchData = basics.wherePage.searchWhere;
+    } else {
+      basics.wherePage.searchWhere = this.searchData;
+    }
   },
+  mounted: function() {},
   methods: {
-    setTagChange: function(newVal, oldVal) {
-      if (newVal) {
-        if (oldVal) {
-          this.whereTags[oldVal] = newVal;
-        } else {
-          this.whereTags.push(newVal);
+    onClearWhere:function(){
+      this.whereTags=[];
+      for (var item in this.searchData) {
+        if (this.noShowSearch.indexOf(item.toLowerCase() + ";") == -1) {
+          this.searchData[item]='';
         }
+      }
+      this.getDataList(0);
+    },
+    onSearchWhereFixed: function() {
+      var objButton = this.$refs.lockSearch;
+      var css = "iconfont icon-notlockpage";
+      var words = "锁定";
+      if (this.lockSearch) {
+        this.lockSearch = false;
       } else {
-        if (oldVal) {
-          this.whereTags.splice(this.whereTags.indexOf(oldVal), 1);
-        }
+        css = "iconfont icon-lockpage";
+        words = "取消锁定";
+        this.lockSearch = true;
       }
-      // const oldTag = this.whereTags.filter(t => t.name == name);
-      // if (newVal) {
-      //   if (oldTag.length > 0) {
-      //     this.whereTags[this.whereTags.indexOf(oldTag[0])].value = newVal;
-      //   } else {
-      //     this.whereTags.push({ type: "", value: newVal, name: name });
-      //   }
-      // } else {
-      //   if (oldTag.length > 0) {
-      //     this.whereTags.splice(this.whereTags.indexOf(oldTag[0]), 1);
-      //   }
-      // }
+      objButton.className = css;
+      objButton.title = words;
     },
-    onWhereTagDelete: function(tag) {
-      switch (tag.name) {
-        case "address":
-          this.searchData.address = "";
-          break;
-        case "account":
-          this.searchData.account = "";
-          break;
-      }
-      this.whereTags.splice(this.whereTags.indexOf(tag), 1);
-      this.search(0);
+    onAddData: function() {
+      alert("点击了新增" + this.selectRowData.account);
     },
-    addData: function() {
-      alert("点击了新增"+this.selectRowData.account);
+    onEditData: function() {
+      alert("点击了修改" + this.selectRowData.account);
     },
-    editData: function() {
-      alert("点击了修改"+this.selectRowData.account);
+    onDeleteData: function() {
+      alert("点击了删除" + this.selectRowData.account);
     },
-    deleteData:function(){
-      alert("点击了删除"+this.selectRowData.account);
-    },
-    rowcontextmenu: function(row, event) {
+    onRowContextMenu: function(row, event) {
       event.preventDefault();
-      this.$refs.selectItems.clearSelection();
-      this.$refs.selectItems.toggleRowSelection(row);
+      this.$refs.selectList.clearSelection();
+      this.$refs.selectList.toggleRowSelection(row);
       var x = event.clientX;
       var y = event.clientY;
       this.contextMenuData.axis = { x, y };
-      this.selectRowData =row;
+      this.selectRowData = row;
     },
-    rowclick: function(row) {
+    onRowClick: function(row) {
       if (this.isSingle) {
-        this.$refs.selectItems.clearSelection();
-        this.$refs.selectItems.toggleRowSelection(row);
+        this.$refs.selectList.clearSelection();
+        this.$refs.selectList.toggleRowSelection(row);
       } else {
-        this.$refs.selectItems.toggleRowSelection(row);
+        this.$refs.selectList.toggleRowSelection(row);
       }
     },
-    sortchange: function(column) {
+    onSortChange: function(column) {
       var searchorderby = "";
       if (column.order === "descending") {
         searchorderby = "desc";
       }
-      baseConfig.wherePage.searchWhere.orderBy =
+      basics.wherePage.searchWhere.orderBy =
         column.prop + " " + searchorderby;
-      this.search(0);
+      this.getDataList(0);
       return false;
     },
-    handleSelectionChange: function(val) {
+    onSelectionChange: function(val) {
       this.selectItems = val;
     },
     setAddressSearch: function(val) {
       this.searchData.address = val;
     },
-    setDialog: function(val) {
+    setEditDialog: function(val) {
       if (val === 1) {
         this.dialogFormVisible = false;
       } else if (val === 2) {
         this.dialogFormVisible = false;
-        this.search(0);
+        this.getDataList(0);
       }
     },
     setTags: function(data) {
       this.whereTags = [];
       for (var item in data) {
-        if (this.noShowSearch.indexOf(item + ";") == -1) {
+        if (this.noShowSearch.indexOf(item.toLowerCase() + ";") == -1) {
           if (data[item]) {
             this.whereTags.push(data[item]);
           }
         }
       }
     },
-    search: function(num) {
-      baseConfig.wherePage.page = "userlist";
+    getDataList: function(num) {
+      basics.wherePage.page = "userlist";
       var whereData = {};
       if (num == 0) {
-        baseConfig.wherePage.searchWhere = this.searchData;
+        basics.wherePage.searchWhere = this.searchData;
       }
-      whereData = baseConfig.wherePage.searchWhere;
+      whereData = basics.wherePage.searchWhere;
       this.setTags(whereData);
       request
-        .post(baseConfig.server + "/api/user/getlist", whereData)
+        .post(basics.server + "/api/user/getlist", whereData)
         .then(res => {
           if (res.d.length > 0) {
             this.tableData = res.d;
             this.searchData.total = res.t;
-            this.showSearchWhere = false;
           } else {
-            if (baseConfig.wherePage.searchWhere.pageindex > 1) {
-              baseConfig.wherePage.searchWhere.pageindex -= 1;
-              this.search(1);
+            if (basics.wherePage.searchWhere.pageindex > 1) {
+              basics.wherePage.searchWhere.pageindex -= 1;
+              this.getDataList(1);
             } else {
               this.tableData = res.d;
               this.searchData.total = res.t;
-              this.showSearchWhere = false;
             }
+          }
+          if (!this.lockSearch) {
+            this.showSearchWhere = false;
           }
         });
     },
-    editClick: function(id) {
-      router.push({ name: "user-edits", params: { id: id } });
+    onEditClick: function(id) {
+      router.push({ name: "user-Edits", params: { id: id } });
     },
-    addClick: function() {
-      router.push({ name: "user-edits" });
+    onAddClick: function() {
+      router.push({ name: "user-Edits" });
     },
-    deleteClick: function(id) {
+    onAddClicks: function() {
+      this.dialogFormVisible = true;
+    },
+    onDeleteClick: function(id) {
       request
-        .get(baseConfig.server + "/api/user/delete", { params: { id: id } })
+        .get(basics.server + "/api/user/delete", { params: { id: id } })
         .then(res => {
           if (res.c === 0) {
             this.$message({
@@ -312,7 +300,7 @@ export default {
               message: "删除成功",
               type: "success"
             });
-            this.search(1);
+            this.getDataList(1);
           } else {
             this.$message({
               showClose: true,
@@ -322,19 +310,20 @@ export default {
           }
         });
     },
-
-    handleSizeChange(val) {
-      baseConfig.wherePage.searchWhere.pageSize = val;
-      this.search(1);
+    onListSizeChange(val) {
+      basics.wherePage.searchWhere.pageSize = val;
+      this.getDataList(1);
     },
-    handleCurrentChange(val) {
-      baseConfig.wherePage.searchWhere.pageindex = val;
-      this.search(1);
+    onListIndexChange(val) {
+      basics.wherePage.searchWhere.pageindex = val;
+      this.getDataList(1);
     },
-    searchClick: function() {},
-    mouseleave: function() {
+    onClickMask: function() {
       this.showSearchWhere = false;
     }
-  }
+  },
+  filters: {},
+  computed: {},
+  watch: {}
 };
 </script>

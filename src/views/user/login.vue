@@ -17,7 +17,7 @@
             <input type="password" class="form-control empty" v-on:blur="isEmpty" v-model="loginForm.password" name="密码">
             <label :style="isPasswordEmpty" class="floating-label">密码</label>
           </div>
-          <button type="button" @click="submitForm()" class="btn btn-primary btn-block">登录</button>
+          <button type="button" @click="onSubmitForm" class="btn btn-primary btn-block">登录</button>
         </form>
         <div class="page-copyright page-copyright-inverse">
           <p>© 2018 德贝实业All RIGHT RESERVED.</p>
@@ -28,16 +28,16 @@
   </div>
 </template>
 <script>
-import baseConfig from "@/plugins/config/baseConfig";
-import request from "@/plugins/config/requestProcessor";
-import "@/css/bootstrap.less";
-import "@/css/bootstrap-extend.less";
-import "@/css/site.less";
-import "@/css/login.less";
+import basics from "@/config/basics";
+import request from "@/plugins/processor/request";
+import "@/assets/theme/bootstrap.less";
+import "@/assets/theme/bootstrap-extend.less";
+import "@/assets/theme/site.less";
+import "@/assets/theme/login.less";
 export default {
   name: "login",
   created: function() {
-    this.isEmpty();
+    this.setLoginInfo();
   },
   data: function() {
     return {
@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    submitForm: function() {
+    onSubmitForm: function() {
       var bl =true;
       if(!this.loginForm.account)
       {
@@ -64,14 +64,14 @@ export default {
       }
       if(bl)
       {
-        request.get(baseConfig.server + "/api/login/Login", {params: this.loginForm}).then(res => {
-          baseConfig.currentUser = res.d;
-          this.$router.push({ name: "home" });
+        request.get(basics.server + "/api/login/login", {params: this.loginForm}).then(res => {
+          basics.currentUser = res.d;
+          this.$router.push({ name: "Home" });
         });
       }
       return bl;
     },
-    isEmpty: function() {
+    setLoginInfo: function() {
       if (this.loginForm.account) {
         this.isAccountEmpty = "top:-.8em;font-size: .8rem;";
       } else {

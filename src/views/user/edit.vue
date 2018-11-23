@@ -1,5 +1,5 @@
 <template>
-  <div class="useredits">
+  <div class="useredit">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
@@ -10,7 +10,7 @@
       <el-form-item label="年龄" prop="age">
         <el-input type="number" v-model.number ="ruleForm.age"></el-input>
       </el-form-item>
-      <addressCpt v-on:address_val="setAddress" :param="ruleForm.address" v-if="hackReset"></addressCpt>
+      <addressitem v-on:setAddress="setAddress" :param="ruleForm.address" v-if="hackReset"></addressitem>
       <el-form-item label="创建时间" required>
         <el-col :span="11">
           <el-form-item prop="createDate">
@@ -21,34 +21,29 @@
       <el-form-item label="是否有效" prop="status">
         <el-switch v-model="ruleForm.status"></el-switch>
       </el-form-item>
-      <roleCpt v-on:role_val="setRole" :param="ruleForm.type" v-if="hackReset"></roleCpt>
-      <el-form-item  class="operation">
-        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
-        <el-button @click="cancelClick()" type="info">取消</el-button>
-      </el-form-item>
+      <roleitem v-on:setRole="setRole" :param="ruleForm.type" v-if="hackReset"></roleitem>
     </el-form>
+    <div class="operation">
+      <el-button type="primary" @click="onSubmitForm('ruleForm')">提交</el-button>
+      <!-- <el-button @click="OnResetForm('ruleForm')">重置</el-button> -->
+      <el-button @click="onCancel" type="info">取消</el-button>
+    </div>
   </div>
 </template>
 <script>
-import baseConfig from "@/plugins/config/baseConfig";
-import request from "@/plugins/config/requestProcessor";
-import addressCpt from "@/components/address.vue";
-import roleCpt from "@/components/role.vue";
-import '@/css/edit.less'
+import basics from "@/config/basics";
+import request from "@/plugins/processor/request";
+import addressitem from "@/components/opration/AddressItem.vue";
+import roleitem from "@/components/opration/RoleItem.vue";
+import "@/assets/theme/edit.less";
 export default {
-  name: "useredits",
+  name: "useredit",
   components: {
-    addressCpt,
-    roleCpt
+    addressitem,
+    roleitem
   },
-  created: function() {
-    if (this.$route.params.id) {
-      this.ruleForm.id = this.$route.params.id;
-      request.get(baseConfig.server + "/api/user/getmodel", {params: { id: this.ruleForm.id }}).then(res => {
-          this.ruleForm = res.d;
-        });
-    }
+  props: {
+    param: ""
   },
   data() {
     var checkAge = (rule, value, callback) => {
@@ -59,7 +54,7 @@ export default {
       }
     };
     return {
-      dialogFormVisible:true,
+      dialogFormVisible: true,
       hackReset: true,
       ruleForm: {
         id: "",
@@ -89,51 +84,83 @@ export default {
             trigger: "blur"
           }
         ],
-        type: [{required: true,message: "请至少选择一个权限",trigger: "change"}]
+        type: [
+          { required: true, message: "请至少选择一个权限", trigger: "change" }
+        ]
       }
     };
   },
-  computed: {},
+  created: function() {
+    if (this.param) {
+      this.ruleForm.id = this.param;
+      this.getUserModel();
+    }
+  },
   methods: {
+    getUserModel: function() {
+      request
+        .get(basics.server + "/api/user/getmodel", {
+          params: { id: this.ruleForm.id }
+        })
+        .then(res => {
+          this.ruleForm = res.d;
+        });
+    },
     setAddress: function(val) {
       this.ruleForm.address = val;
     },
     setRole: function(val) {
       this.ruleForm.type = val;
-      this.$refs['ruleForm'].validateField('type');
+      this.$refs["ruleForm"].validateField("type");
     },
-    submitForm: function(formName) {
+    onSubmitForm: function(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.ruleForm.types = JSON.stringify(this.ruleForm.type);
-          request.post(baseConfig.server + '/api/user/operation', this.ruleForm).then(res => {
+          request
+            .post(basics.server + "/api/user/operation", this.ruleForm)
+            .then(res => {
               if (res.c === 0) {
-                this.$emit("dialog_op",2);
-                this.$message({showClose: true,message: '操作成功',type: 'success'});
+                this.$emit("setEditDialog", 2);
+                this.$message({
+                  showClose: true,
+                  message: "操作成功",
+                  type: "success"
+                });
               } else {
-                this.$message({showClose: true,message: '操作失败',type: 'error'});
+                this.$message({
+                  showClose: true,
+                  message: "操作失败",
+                  type: "error"
+                });
               }
             });
         } else {
-          this.$message({showClose: true,message: '验证未通过',type: 'warning'});
+          this.$message({
+            showClose: true,
+            message: "验证未通过",
+            type: "warning"
+          });
           return false;
         }
       });
     },
-    reload: function() {
+    setReload: function() {
       this.hackReset = false;
       this.$nextTick(() => (this.hackReset = true));
     },
-    resetForm: function(formName) {
-      this.reload();
+    OnResetForm: function(formName) {
+      this.setReload();
       this.$refs[formName].resetFields();
     },
-    replacement: function() {
-    },
-    cancelClick: function() {
-      this.$emit("dialog_op",1);
-     //this.$root.dialogFormVisible = false
-      //router.go(-1);
+    onCancel: function() {
+      this.$emit("setEditDialog", 1);
+    }
+  },
+  watch: {
+    id: function(newVal) {
+      this.ruleForm.id = newVal;
+      this.getUserModel();
     }
   }
 };

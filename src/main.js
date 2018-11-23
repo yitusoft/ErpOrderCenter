@@ -3,8 +3,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
-import request from "./plugins/config/requestProcessor"
-import baseConfig from './plugins/config/baseConfig'
+import request from "./plugins/processor/request"
+import basics from './config/basics'
 
 Vue.config.productionTip = false
 Vue.config.silent = true
@@ -16,10 +16,9 @@ let app = new Vue({
   render: h => h(App)
 })
 
-request.get(baseConfig.server + '/api/login/checkLogin').then(res => {
-  if (res)
-  {
-    baseConfig.currentUser=res.d
+request.get(basics.server + '/api/login/checkLogin').then(res => {
+  if (res) {
+    basics.currentUser = res.d
     app.$mount('#app')
   }
 })

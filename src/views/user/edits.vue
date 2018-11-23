@@ -1,9 +1,9 @@
 <template>
-  <div class="useredit">
+  <div class="useredits">
     <div class="header">
-      <div style="float: left;margin-top: 5px;"><span class="title-name">用户操作</span></div>
+      <div class="title"><span class="title-name">用户操作</span></div>
     </div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name" size="small"></el-input>
       </el-form-item>
@@ -13,7 +13,7 @@
       <el-form-item label="年龄" prop="age">
         <el-input type="number" v-model.number ="ruleForm.age" size="small" ></el-input>
       </el-form-item>
-      <addressCpt v-on:address_val="setAddress" :param="ruleForm.address" v-if="hackReset"></addressCpt>
+      <addressitem v-on:setAddress="setAddress" :param="ruleForm.address" v-if="hackReset"></addressitem>
       <el-form-item label="创建时间" required>
         <el-col :span="11">
           <el-form-item prop="createDate">
@@ -24,9 +24,9 @@
       <el-form-item label="是否有效" prop="status">
         <el-switch v-model="ruleForm.status"></el-switch>
       </el-form-item>
-      <roleCpt v-on:role_val="setRole" :param="ruleForm.type" v-if="hackReset"></roleCpt>
+      <roleitem v-on:role_val="setRole" :param="ruleForm.type" v-if="hackReset"></roleitem>
       <el-form-item label="单选">
-        <el-radio-group v-model="ruleForm.radioval">
+        <el-radio-group v-model="ruleForm.radioVal">
            <el-radio v-for="item in allList" :key="item.key" :value="item.key" :label="item.text" ></el-radio>
         </el-radio-group>
       </el-form-item>
@@ -57,59 +57,41 @@
         <el-cascader
           placeholder="可搜索"
           :options="options"
-          v-model="searchregions"
+          v-model="searchRegions"
           filterable></el-cascader>
       </el-form-item>
 
-       <fileuploadcpt 
-          @return_val="setfileupload" 
-          :param="ruleForm.uploadfile" 
-          :isauto="false" 
+       <fileuploaditem 
+          v-on:setFileUpload="setFileUpload" 
+          :param="ruleForm.uploadFile" 
+          :isAuto="false" 
           :multiple="true"
-          :suffix="uploadimage" 
+          :suffix="uploadImage" 
           type="file"  
-          :size="filesize"  
-          ></fileuploadcpt> 
-      <el-form-item class="operation">
-        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
-        <el-button @click="cancelClick()" type="info">取消</el-button>
-      </el-form-item>
+          :size="fileSize"  
+          ></fileuploaditem> 
     </el-form>
+    <div class="operation">
+        <el-button type="primary" @click="onSubmitForm('ruleForm')">提交</el-button>
+        <!-- <el-button @click="onResetForm('ruleForm')">重置</el-button> -->
+        <el-button @click="onCancel" type="info">取消</el-button>
+    </div>
   </div>
 </template>
 <script>
-import baseConfig from "@/plugins/config/baseConfig";
-import request from "@/plugins/config/requestProcessor";
+import basics from "@/config/basics";
+import request from "@/plugins/processor/request";
 import router from "@/router";
-import addressCpt from "@/components/address.vue";
-import roleCpt from "@/components/role.vue";
-import fileuploadcpt from "@/components/fileupload.vue";
-import '@/css/edit.less'
+import addressitem from "@/components/opration/AddressItem.vue";
+import roleitem from "@/components/opration/RoleItem.vue";
+import fileuploaditem from "@/components/opration/FileUploadItem.vue";
+import '@/assets/theme/edit.less'
 export default {
-  name: "useredit",
+  name: "useredits",
   components: {
-    addressCpt,
-    roleCpt,
-    fileuploadcpt
-  },
-  created: function() {
-    request.get(baseConfig.server + "/api/bind/getregion").then(res => {
-          this.options = res.d;
-        });
-    request.get(baseConfig.server + "/api/bind/getlist").then(res => {
-          this.allList = res.d;
-        });
-    if (this.$route.params.id) {
-      this.ruleForm.id = this.$route.params.id;
-      request
-        .get(baseConfig.server + "/api/user/getmodel", {
-          params: { id: this.ruleForm.id }
-        })
-        .then(res => {
-          this.ruleForm = res.d;
-        });
-    }
+    addressitem,
+    roleitem,
+    fileuploaditem
   },
   data() {
     var checkAge = (rule, value, callback) => {
@@ -120,11 +102,11 @@ export default {
       }
     };
     return {
-      filesize:30,
-      searchregions:[],
+      fileSize:30,
+      searchRegions:[],
       activeName: 'first',
       hackReset: true,
-      uploadimage:baseConfig.uploadimage,
+      uploadImage:basics.uploadImage,
       allList:[],
       selectMultiple:[],
       options:[],
@@ -137,8 +119,8 @@ export default {
         createDate: "",
         status: true,
         type: "",
-        radioval:'',
-        uploadfile:''
+        radioVal:'',
+        uploadFile:''
       },
       rules: {
         name: [
@@ -164,10 +146,27 @@ export default {
       }
     };
   },
-  computed: {},
+  created: function() {
+    request.get(basics.server + "/api/bind/getregion").then(res => {
+          this.options = res.d;
+        });
+    request.get(basics.server + "/api/bind/getlist").then(res => {
+          this.allList = res.d;
+        });
+    if (this.$route.params.id) {
+      this.ruleForm.id = this.$route.params.id;
+      request
+        .get(basics.server + "/api/user/getmodel", {
+          params: { id: this.ruleForm.id }
+        })
+        .then(res => {
+          this.ruleForm = res.d;
+        });
+    }
+  },
   methods: {
-    setfileupload:function(val){
-      this.ruleForm.uploadfile = val;
+    setFileUpload:function(val){
+      this.ruleForm.uploadFile = val;
     },
     setAddress: function(val) {
       this.ruleForm.address = val;
@@ -176,15 +175,15 @@ export default {
       this.ruleForm.type = val;
       this.$refs["ruleForm"].validateField("type");
     },
-    submitForm: function(formName) {
+    onSubmitForm: function(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.ruleForm.types = JSON.stringify(this.ruleForm.type);
           request
-            .post(baseConfig.server + "/api/user/operation", this.ruleForm)
+            .post(basics.server + "/api/user/operation", this.ruleForm)
             .then(res => {
               if (res.c === 0) {
-                router.push({ name: "user-list" });
+                router.push({ name: "user-List" });
                 this.$message({
                   showClose: true,
                   message: "操作成功",
@@ -208,15 +207,15 @@ export default {
         }
       });
     },
-    reload: function() {
+    setReload: function() {
       this.hackReset = false;
       this.$nextTick(() => (this.hackReset = true));
     },
-    resetForm: function(formName) {
-      this.reload();
+    onResetForm: function(formName) {
+      this.setReload();
       this.$refs[formName].resetFields();
     },
-    cancelClick: function() {
+    onCancel: function() {
       router.go(-1);
     }
   }
