@@ -1,14 +1,13 @@
 let config = {
-    server: 'http://192.168.7.76:8001',
-    currentUser: null,
+    server: 'http://192.168.7.76:8001', //'http://192.168.7.76:8001',http://localhost:1882
     wherePage: {
-        isCheck:true,
+        isCheck: true,
         page: '',
         searchWhere: null
     },
     uploadImage: '.jpeg,.gif,.png,.bmp',
     uploadFile: '',
-    uploadAll:''
+    uploadAll: ''
 }
 
 if (process.env.NODE_ENV === 'production') {

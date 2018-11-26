@@ -14,7 +14,7 @@
           :on-preview="onPreview"
           >
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <el-button style="margin-left: 10px;" size="small" type="success" @click="onSubmitUpload" v-if="!isauto">上传到服务器</el-button>
+          <el-button style="margin-left: 10px;" size="small" type="success" @click="onSubmitUpload" v-if="!isAuto">上传到服务器</el-button>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
     </el-form-item>
@@ -74,6 +74,7 @@ export default {
     onBeforeAvatarUpload: function(file) {
       const ext = file.name.substring(file.name.indexOf("."));
       const bl = this.suffix.indexOf(ext) > 0;
+      debugger
       const blsize = file.size / 1024 / 1024 < this.size;
       if (!bl) {
         this.$message({

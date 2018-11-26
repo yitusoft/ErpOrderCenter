@@ -90,8 +90,8 @@
           </div>
       </div>
     </transition>
-    <el-dialog title="用户操作" :visible.sync="dialogFormVisible" >
-      <useredit v-on:setEditDialog="setEditDialog" v-if="dialogFormVisible" ></useredit>
+    <el-dialog title="用户操作" :visible.sync="dialogUserVisible"  width="600px" >
+      <useredit v-on:setEditUserDialog="setEditUserDialog" v-if="dialogUserVisible" ></useredit>
     </el-dialog>
     <transition>
         <rightmenuitem :contextMenuData="contextMenuData" v-on:onEditData="onEditData" v-on:onAddData="onAddData" v-on:onDeleteData="onDeleteData" ></rightmenuitem>
@@ -145,7 +145,7 @@ export default {
       selectItems: {},
       isCheck: basics.wherePage.isCheck,
       page: basics.wherePage.page,
-      dialogFormVisible: false,
+      dialogUserVisible: false,
       showSearchWhere: false,
       noShowSearch: "pageindex;pagesize;orderby;total;",
       searchData: {
@@ -235,11 +235,11 @@ export default {
     setAddressSearch: function(val) {
       this.searchData.address = val;
     },
-    setEditDialog: function(val) {
+    setEditUserDialog: function(val) {
       if (val === 1) {
-        this.dialogFormVisible = false;
+        this.dialogUserVisible = false;
       } else if (val === 2) {
-        this.dialogFormVisible = false;
+        this.dialogUserVisible = false;
         this.getDataList(0);
       }
     },
@@ -288,7 +288,7 @@ export default {
       router.push({ name: "user-Edits" });
     },
     onAddClicks: function() {
-      this.dialogFormVisible = true;
+      this.dialogUserVisible = true;
     },
     onDeleteClick: function(id) {
       request

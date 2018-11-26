@@ -1,32 +1,54 @@
 <template>
-  <div class="useredit">
+  <div class="operationedit">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
-      <el-form-item label="账号" prop="account">
-        <el-input v-model="ruleForm.account"></el-input>
-      </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input type="number" v-model.number ="ruleForm.age"></el-input>
-      </el-form-item>
-      <addressitem v-on:setAddress="setAddress" :param="ruleForm.address" v-if="hackReset"></addressitem>
-      <el-form-item label="创建时间" required>
-        <el-col :span="11">
-          <el-form-item prop="createDate">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="名称" prop="name">
+            <el-input v-model="ruleForm.name"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="账号" prop="account" >
+            <el-input v-model="ruleForm.account"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="年龄" prop="age">
+            <el-input type="number" v-model.number ="ruleForm.age"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <addressitem v-on:setAddress="setAddress" :param="ruleForm.address" v-if="hackReset"></addressitem>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="创建时间" prop="createDate" required>
             <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.createDate" style="width: 100%;"></el-date-picker>
           </el-form-item>
         </el-col>
-      </el-form-item>
-      <el-form-item label="是否有效" prop="status">
-        <el-switch v-model="ruleForm.status"></el-switch>
-      </el-form-item>
-      <roleitem v-on:setRole="setRole" :param="ruleForm.type" v-if="hackReset"></roleitem>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="是否有效" prop="status">
+            <el-switch v-model="ruleForm.status"></el-switch>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <roleitem v-on:setRole="setRole" :param="ruleForm.type" v-if="hackReset"></roleitem>
+        </el-col>
+      </el-row>
     </el-form>
     <div class="operation">
       <el-button type="primary" @click="onSubmitForm('ruleForm')">提交</el-button>
       <!-- <el-button @click="OnResetForm('ruleForm')">重置</el-button> -->
-      <el-button @click="onCancel" type="info">取消</el-button>
+      <el-button @click="onCancel(1)" type="info">取消</el-button>
     </div>
   </div>
 </template>
@@ -75,13 +97,13 @@ export default {
           { required: true, message: "请输入账号", trigger: "blur" },
           { min: 5, max: 20, message: "长度在 5 到 20 个字符", trigger: "blur" }
         ],
-        age       : [{ validator: checkAge, trigger: "blur" }],
-        address   : [{ required: true, message: "请选择区域", trigger: "change" }],
+        age: [{ validator: checkAge, trigger: "blur" }],
+        address: [{ required: true, message: "请选择区域", trigger: "change" }],
         createDate: [
           {
             required: true,
-            message : "请选择日期",
-            trigger : "blur"
+            message: "请选择日期",
+            trigger: "blur"
           }
         ],
         type: [
@@ -121,12 +143,12 @@ export default {
             .post(basics.server + "/api/user/operation", this.ruleForm)
             .then(res => {
               if (res.c === 0) {
-                this.$emit("setEditDialog", 2);
                 this.$message({
                   showClose: true,
                   message: "操作成功",
                   type: "success"
                 });
+                this.onCancel(2);
               } else {
                 this.$message({
                   showClose: true,
@@ -153,8 +175,8 @@ export default {
       this.setReload();
       this.$refs[formName].resetFields();
     },
-    onCancel: function() {
-      this.$emit("setEditDialog", 1);
+    onCancel: function(num) {
+      this.$emit("setEditUserDialog", num);
     }
   },
   watch: {

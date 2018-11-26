@@ -13,6 +13,8 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="updatepassword" ><i class="iconfont icon-editpassword" ></i> 修改密码</el-dropdown-item>
         <div class="dropdown-divider"></div>
+        <el-dropdown-item command="lockpage" ><i class="iconfont icon-lock" ></i> 锁定</el-dropdown-item>
+        <div class="dropdown-divider"></div>
         <el-dropdown-item command="loginout"><i class="iconfont icon-loginout"></i> 登出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -106,7 +108,7 @@
 <el-container>
   <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
     <transition name="slide-fade-r">
-      <el-aside v-show="menuShow" :class="navFlotCss" style="background-color:#fff;border-right: 1px solid rgb(228, 225, 225);" width="260px" translate>
+      <el-aside v-show="menuShow" :class="navFlotCss" style="background-color:#fff;border-right: 1px solid rgb(228, 225, 225);" width="200px" translate>
         <div class="site-menubar-header">
           <div class="cover overlay">
             <img class="cover-image" src="/static/img/login-background.jpg" alt="...">
@@ -116,7 +118,7 @@
                   <img src="/static/img/5.jpg" alt="">
                 </a>
                 <div class="site-menubar-info">
-                  <h5 class="site-menubar-user">Machi</h5>
+                  <h5 class="site-menubar-user" v-once>{{user|userName}}</h5>
                   <p class="site-menubar-email">machidesign</p>
                 </div>
               </div>
@@ -132,10 +134,10 @@
         >
           <el-submenu v-for="menu in menus" :key="menu.id" :index="menu.id">
             <template slot="title" style="padding-left: 3.5em;">
-              <i class="iconfont icon-email" style="margin: 0 1em 0 2em;"></i>
+              <i class="iconfont icon-email" style="margin:0px .5em 0px 1.5em;"></i>
               <span>{{menu.name}}</span>
             </template>
-            <el-menu-item v-for="c in menu.item" :key="c.route" :index="c.route"  style="padding-left: 85px;">{{c.name}} </el-menu-item>
+            <el-menu-item v-for="c in menu.item" :key="c.route" :index="c.route"  style="padding-left: 65px;">{{c.name}} </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -148,33 +150,52 @@
     </el-footer>
   </el-main>
 </el-container>
+<el-dialog title="用户操作" :visible.sync="dialogEditPasswordVisible" width="400px" >
+  <editpassworditem v-on:setEditPasswordDialog="setEditPasswordDialog" v-if="dialogEditPasswordVisible" ></editpassworditem>
+</el-dialog>
 </div>
 </template>
 <script>
 import basics from "@/config/basics";
 import request from "@/plugins/processor/request";
+import store from "@/store";
 import "@/assets/theme/home.less";
 import "@/assets/theme/fonts/iconfont.less";
 import router from "@/router";
+import editpassworditem from "@/components/opration/EditPasswordItem.vue";
 export default {
   name: "home",
+  components: {
+    editpassworditem
+  },
   data: function() {
     return {
       isFixed: false,
       menuShow: false,
       menuShowCss: "iconfont icon-transversethree",
       navFlotCss: "",
-      user: basics.currentUser,
+      user: store.state.currentUser,
       emailNumber: 1,
       messageNumber: 1,
-      menus: []
+      menus: [],
+      dialogEditPasswordVisible: false
     };
   },
   created: function() {
     this.getMenus();
-    router.push({ name: "user-List" });
+    //var name =sessionStorage.getItem("firstPage") || 'user-List' ;
+    router.push({ name: sessionStorage.getItem("firstPage") || "user-List" });
   },
   methods: {
+    setEditPasswordDialog: function(val) {
+      if (val === 1) {
+        this.dialogEditPasswordVisible = false;
+      } else if (val === 2) {
+        this.dialogEditPasswordVisible = false;
+        basics.currentUser = null;
+        router.push({ name: "Login" });
+      }
+    },
     getMenus: function() {
       request.get(basics.server + "/api/menu/getmenus").then(res => {
         this.menus = res.d;
@@ -212,11 +233,25 @@ export default {
       if (val === "loginout") {
         request.get(basics.server + "/api/login/loginout").then(res => {
           if (res.c === 0) {
-            basics.currentUser = null;
+            store.dispatch("setCurrentUser", null);
+            //sessionStorage.removeItem('firstPage');
+            sessionStorage.clear();
             router.push("Login");
           }
         });
+      } else if (val === "lockpage") {
+        sessionStorage.setItem("firstPage", this.$route.name);
+        router.push("Lock");
+      } else if (val === "updatepassword") {
+        this.dialogEditPasswordVisible = true;
       }
+    }
+  },
+  filters:{
+    userName:function(value)
+    {
+      if (!value) return ''
+      return value.name;
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="useredits">
+  <div class="operationedits">
     <div class="header">
       <div class="title"><span class="title-name">用户操作</span></div>
     </div>
@@ -93,7 +93,7 @@ export default {
     roleitem,
     fileuploaditem
   },
-  data() {
+  data:function() {
     var checkAge = (rule, value, callback) => {
       if (!value && value != 0) {
         return callback(new Error("年龄不能为空"));
@@ -216,7 +216,7 @@ export default {
       this.$refs[formName].resetFields();
     },
     onCancel: function() {
-      router.go(-1);
+      router.push({ name: "user-List" });//router.go(-1);
     }
   }
 };

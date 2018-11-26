@@ -36,9 +36,6 @@ import "@/assets/theme/site.less";
 import "@/assets/theme/login.less";
 export default {
   name: "login",
-  created: function() {
-    this.setLoginInfo();
-  },
   data: function() {
     return {
       isAccountEmpty: "",
@@ -48,6 +45,9 @@ export default {
         password: "11111"
       }
     };
+  },
+  created: function() {
+    this.setLoginInfo();
   },
   methods: {
     onSubmitForm: function() {
@@ -64,6 +64,7 @@ export default {
           .get(basics.server + "/api/login/login", { params: this.loginForm })
           .then(res => {
             basics.currentUser = res.d;
+            sessionStorage.setItem('firstPage','user-List');
             this.$router.push({ name: "Home" });
           });
       }

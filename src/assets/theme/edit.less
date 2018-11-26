@@ -1,4 +1,4 @@
-.useredit{
+.operationedit{
     margin: 0;
     padding: 0;
     display: flex;
@@ -17,11 +17,12 @@
         max-height: 400px;
         overflow: auto;
         .el-form-item{
-            margin: 10px 20px;
+            margin: 22px 20px;
         }
     }
 }
-.useredits{
+
+.operationedits{
     margin: 0;
     padding: 0;
     display: flex;
@@ -61,4 +62,42 @@
         text-align: right;
         min-height: 60px;
     }
+}
+.passwordedit{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    .operation{
+        /* padding: 10px 30px 10px 30px; */
+        background-color: #f2f1f7;
+        border-top: 1px solid #e6e6e6;
+        text-align: right;
+        min-height: 60px;
+        line-height: 60px;
+        padding-right: 40px;
+    }
+    .el-form{
+        max-height: 400px;
+        overflow: auto;
+        .el-form-item{
+            margin: 22px 20px;
+        }
+    }
+}
+//弹窗样式
+.el-dialog
+{
+  //width: 60%;
+  .el-dialog__header{
+    padding: 10px 20px 10px;
+    background-color: #e4e4e4;
+    .el-dialog__headerbtn{
+      top:10px;
+    }
+  }
+  .el-dialog__body{
+    padding:0;
+  };
 }
