@@ -74,7 +74,6 @@ export default {
     onBeforeAvatarUpload: function(file) {
       const ext = file.name.substring(file.name.indexOf("."));
       const bl = this.suffix.indexOf(ext) > 0;
-      debugger
       const blsize = file.size / 1024 / 1024 < this.size;
       if (!bl) {
         this.$message({
@@ -117,6 +116,7 @@ export default {
         });
     },
     onPreview:function(file){
+      var fileInfo =file;
       //选中列表需要执行的操作
     },
     onBeforeRemove(file) {

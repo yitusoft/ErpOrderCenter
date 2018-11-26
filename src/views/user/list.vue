@@ -30,9 +30,9 @@
         @row-contextmenu="onRowContextMenu"
         border="true" 
         >
-          <el-table-column type="selection" width="55">
+          <el-table-column type="selection" width="38">
           </el-table-column>
-          <el-table-column type="index" label="序号" width="70">
+          <el-table-column type="index" label="序号" width="50" style="text-align: center;">
           </el-table-column>
           <el-table-column prop="account" label="账号">
           </el-table-column>
@@ -44,7 +44,7 @@
           </el-table-column>
           <el-table-column prop="createDate" label="创建时间">
           </el-table-column>
-          <el-table-column label="更多操作" width="100">
+          <el-table-column label="操作" width="50">
             <template slot-scope="scope">
               <el-dropdown placement="bottom-end">
                 <span class="el-dropdown-link">操作</span>
@@ -55,7 +55,7 @@
               </el-dropdown>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="100">
+          <el-table-column label="操作" width="100">
               <template slot-scope="scope">
                   <el-button @click="onEditClick(scope.row.id)" type="text" size="small">编辑</el-button>
                   <el-button @click="onDeleteClick(scope.row.id)" type="text" size="small">删除</el-button>
@@ -143,8 +143,6 @@ export default {
       isSingle: true,
       tableData: [],
       selectItems: {},
-      isCheck: basics.wherePage.isCheck,
-      page: basics.wherePage.page,
       dialogUserVisible: false,
       showSearchWhere: false,
       noShowSearch: "pageindex;pagesize;orderby;total;",
@@ -162,7 +160,7 @@ export default {
     };
   },
   created: function() {
-    if (this.isCheck && this.page == "userlist") {
+    if (basics.wherePage.page == "userlist") {
       this.searchData = basics.wherePage.searchWhere;
     } else {
       basics.wherePage.searchWhere = this.searchData;
@@ -212,12 +210,12 @@ export default {
       this.selectRowData = row;
     },
     onRowClick: function(row) {
-      if (this.isSingle) {
+      //if (this.isSingle) {
         this.$refs.selectList.clearSelection();
         this.$refs.selectList.toggleRowSelection(row);
-      } else {
-        this.$refs.selectList.toggleRowSelection(row);
-      }
+      // } else {
+      //   this.$refs.selectList.toggleRowSelection(row);
+      // }
     },
     onSortChange: function(column) {
       var searchorderby = "";
@@ -230,6 +228,7 @@ export default {
       return false;
     },
     onSelectionChange: function(val) {
+      debugger
       this.selectItems = val;
     },
     setAddressSearch: function(val) {

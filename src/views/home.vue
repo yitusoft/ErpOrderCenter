@@ -108,7 +108,8 @@
 <el-container>
   <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" style="border-right: solid 1px #e6e6e6;background-color: #fff;" >
     <transition name="slide-fade-r">
-      <el-aside v-show="menuShow" :class="navFlotCss" style="background-color:#fff;border-right: 1px solid rgb(228, 225, 225);" width="200px" translate>
+      <!-- border-right: 1px solid rgb(228, 225, 225); -->
+      <el-aside v-show="menuShow" :class="navFlotCss" style="background-color:#fff;" width="200px" translate>
         <div class="site-menubar-header">
           <div class="cover overlay">
             <img class="cover-image" src="/static/img/login-background.jpg" alt="...">

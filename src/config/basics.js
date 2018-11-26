@@ -1,7 +1,7 @@
 let config = {
     server: 'http://192.168.7.76:8001', //'http://192.168.7.76:8001',http://localhost:1882
+    InvalidTime:3,
     wherePage: {
-        isCheck: true,
         page: '',
         searchWhere: null
     },
@@ -11,6 +11,6 @@ let config = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    config.server = 'http://192.168.7.76:8080'
+    config.server = 'http://192.168.7.76:8001'
 }
 export default config;
