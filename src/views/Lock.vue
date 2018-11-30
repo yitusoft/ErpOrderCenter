@@ -24,9 +24,9 @@
   </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
-import store from '@/store'
+import request from "@/utils/request"
+import basics from '@/utils/basics'
+import store from '@/store/store'
 import "@/assets/theme/bootstrap.less";
 import "@/assets/theme/bootstrap-extend.less";
 import "@/assets/theme/site.less";

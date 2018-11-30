@@ -1,7 +1,7 @@
 <template>
   <div class="addressitem">
       <div>地区</div>
-      <el-select v-model="address" placeholder="区域" v-on:change="setReturnVal">
+      <el-select v-model="address" placeholder="区域" v-on:change="setReturnVal"  size="small">
         <el-option label="全部" value=""></el-option>
         <el-option v-for="item in citys" :key="item.key" :value="item.key" :label="item.text"></el-option>
         <el-option label="成都市" value="chengdu"></el-option>
@@ -10,8 +10,8 @@
   </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 export default {
   name: "addressitem",
   props: {
@@ -31,7 +31,12 @@ export default {
   },
   methods: {
     setReturnVal: function() {
-      this.$emit("setAddressSearch", this.address);
+      var obj;
+      if(this.address)
+      {
+        obj = this.citys.filter(t => t.key == this.address)[0]
+      }
+      this.$emit("setAddress", obj);
     }
   },
   watch: {

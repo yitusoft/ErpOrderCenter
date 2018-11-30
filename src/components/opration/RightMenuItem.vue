@@ -81,6 +81,8 @@ export default {
   z-index: 9999;
   top: 0;
   left: 0;
+  overflow: hidden;
+  border-radius: 4px;
 }
 .vue-contextmenu-listWrapper .context-menu-list {
   width: 75px;

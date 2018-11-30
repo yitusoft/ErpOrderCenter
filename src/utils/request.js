@@ -1,25 +1,25 @@
 import axios from 'axios'
 import app from '@/main'
-import basics from "@/config/basics";
+import basics from "./basics";
 
-var api
+var request
 var loading
 var msg = '请求错误'
 if (process.env.NODE_ENV === 'production') {
-    api = axios.create({
+    request = axios.create({
         baseURL: basics.server,
         withCredentials: false,
         timeout: 1000 * basics.InvalidTime,
     })
 } else {
-    api = axios.create({
+    request = axios.create({
         baseURL: basics.server,
         withCredentials: true,
         timeout: 1000 * basics.InvalidTime,
     })
 }
 
-api.interceptors.request.use(function (config) {
+request.interceptors.request.use(function (config) {
     loading = app.$loading({
         lock: true,
         text: '加载中....',
@@ -30,7 +30,7 @@ api.interceptors.request.use(function (config) {
 }, function (error) {
     return Promise.reject(error);
 });
-api.interceptors.response.use(function (res) {
+request.interceptors.response.use(function (res) {
     loading.close();
     if (res.status === 200) {
         if (res.data.c === 0) {
@@ -55,4 +55,4 @@ api.interceptors.response.use(function (res) {
     app.$message.error(msg);
 });
 
-export default api
+export default request

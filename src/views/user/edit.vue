@@ -1,22 +1,22 @@
 <template>
   <div class="operationedit">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" label-position="right" class="demo-ruleForm">
       <el-row>
         <el-col :span="12">
           <el-form-item label="名称" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
+            <el-input v-model="ruleForm.name" size="small"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="账号" prop="account" >
-            <el-input v-model="ruleForm.account"></el-input>
+            <el-input v-model="ruleForm.account" size="small"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="年龄" prop="age">
-            <el-input type="number" v-model.number ="ruleForm.age"></el-input>
+            <el-input type="number" v-model.number ="ruleForm.age" size="small"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -28,14 +28,14 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="创建时间" prop="createDate" required>
-            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.createDate" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.createDate" style="width: 100%;" size="small"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="是否有效" prop="status">
-            <el-switch v-model="ruleForm.status"></el-switch>
+            <el-switch v-model="ruleForm.status" size="small"></el-switch>
           </el-form-item>
         </el-col>
       </el-row>
@@ -46,15 +46,15 @@
       </el-row>
     </el-form>
     <div class="operation">
-      <el-button type="primary" @click="onSubmitForm('ruleForm')">提交</el-button>
+      <el-button type="primary" @click.stop.prevent="onSubmitForm('ruleForm')">提交</el-button>
       <!-- <el-button @click="OnResetForm('ruleForm')">重置</el-button> -->
-      <el-button @click="onCancel(1)" type="info">取消</el-button>
+      <el-button @click.stop="onCancel(1)" type="info">取消</el-button>
     </div>
   </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 import addressitem from "@/components/opration/AddressItem.vue";
 import roleitem from "@/components/opration/RoleItem.vue";
 import "@/assets/theme/edit.less";

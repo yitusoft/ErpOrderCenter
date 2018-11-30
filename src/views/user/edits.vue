@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title"><span class="title-name">用户操作</span></div>
     </div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" label-position="right" class="demo-ruleForm">
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name" size="small"></el-input>
       </el-form-item>
@@ -26,12 +26,12 @@
       </el-form-item>
       <roleitem v-on:role_val="setRole" :param="ruleForm.type" v-if="hackReset"></roleitem>
       <el-form-item label="单选">
-        <el-radio-group v-model="ruleForm.radioVal">
+        <el-radio-group v-model="ruleForm.radioVal" size="small">
            <el-radio v-for="item in allList" :key="item.key" :value="item.key" :label="item.text" ></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="多个选择">
-        <el-select v-model="selectMultiple" filterable multiple placeholder="可搜索选择">
+        <el-select v-model="selectMultiple" size="small" style="width: 100%;" filterable multiple placeholder="可搜索选择" >
           <el-option
             v-for="item in allList"
             :key="item.key"
@@ -58,7 +58,7 @@
           placeholder="可搜索"
           :options="options"
           v-model="searchRegions"
-          filterable></el-cascader>
+          filterable size="small"></el-cascader>
       </el-form-item>
 
        <fileuploaditem 
@@ -72,15 +72,15 @@
           ></fileuploaditem> 
     </el-form>
     <div class="operation">
-        <el-button type="primary" @click="onSubmitForm('ruleForm')">提交</el-button>
+        <el-button type="primary" @click.stop.prevent="onSubmitForm('ruleForm')">提交</el-button>
         <!-- <el-button @click="onResetForm('ruleForm')">重置</el-button> -->
-        <el-button @click="onCancel" type="info">取消</el-button>
+        <el-button @click.stop="onCancel" type="info">取消</el-button>
     </div>
   </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 import router from "@/router";
 import addressitem from "@/components/opration/AddressItem.vue";
 import roleitem from "@/components/opration/RoleItem.vue";

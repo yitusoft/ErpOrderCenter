@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0b3631"],{"27c9":function(n,e,t){"use strict";t.r(e);var u=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",[n._v("页面6")])},c=[],i=t("2877"),l={},s=Object(i["a"])(l,u,c,!1,null,null,null);s.options.__file="List6.vue";e["default"]=s.exports}}]);
+//# sourceMappingURL=chunk-2d0b3631.b0429354.js.map

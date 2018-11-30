@@ -17,7 +17,7 @@
             <input type="password" class="form-control empty" v-on:blur="isEmpty" v-model="loginForm.password" name="密码">
             <label :style="isPasswordEmpty" class="floating-label">密码</label>
           </div>
-          <button type="button" @click="onSubmitForm" class="btn btn-primary btn-block">登录</button>
+          <button type="button" @click.stop="onSubmitForm" class="btn btn-primary btn-block">登录</button>
         </form>
         <div class="page-copyright page-copyright-inverse">
           <p>© 2018 德贝实业All RIGHT RESERVED.</p>
@@ -28,8 +28,8 @@
   </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 import "@/assets/theme/bootstrap.less";
 import "@/assets/theme/bootstrap-extend.less";
 import "@/assets/theme/site.less";

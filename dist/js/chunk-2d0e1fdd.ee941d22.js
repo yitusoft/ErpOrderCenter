@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0e1fdd"],{"7d93":function(e,n,t){"use strict";t.r(n);var u=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[e._v("页面4")])},i=[],l=t("2877"),s={},c=Object(l["a"])(s,u,i,!1,null,null,null);c.options.__file="List4.vue";n["default"]=c.exports}}]);
+//# sourceMappingURL=chunk-2d0e1fdd.ee941d22.js.map

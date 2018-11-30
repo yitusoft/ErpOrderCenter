@@ -20,8 +20,8 @@
     </el-form-item>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 export default {
   name: "fileupload",
   props: {

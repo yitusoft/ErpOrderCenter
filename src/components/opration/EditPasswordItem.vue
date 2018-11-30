@@ -1,6 +1,6 @@
 <template>
     <div class="passwordedit">
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-position="left" label-width="90px" class="demo-ruleForm">
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-position="right" label-width="90px" class="demo-ruleForm"  size="small">
             <el-form-item label="原密码"  prop="password">
                 <el-input  type="password" v-model="ruleForm.password" clearable></el-input>
             </el-form-item>
@@ -18,8 +18,8 @@
     </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 export default {
   name: "editpassworditem",
   data: function() {
@@ -90,4 +90,29 @@ export default {
   }
 };
 </script>
+<style lang="less">
+.passwordedit{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    .operation{
+        /* padding: 10px 30px 10px 30px; 
+        background-color: #f2f1f7;*/
+        border-top: 1px solid #e6e6e6;
+        text-align: right;
+        min-height: 60px;
+        line-height: 60px;
+        padding-right: 40px;
+    }
+    .el-form{
+        max-height: 400px;
+        overflow: auto;
+        .el-form-item{
+            margin: 22px 20px;
+        }
+    }
+}
+</style>
 

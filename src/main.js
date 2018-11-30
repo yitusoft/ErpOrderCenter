@@ -3,9 +3,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
-import store from './store'
-import request from "./plugins/processor/request"
-import basics from './config/basics'
+import store from './store/store'
+import request from "./utils/request"
+import basics from './utils/basics'
 
 Vue.config.productionTip = false
 Vue.config.silent = true

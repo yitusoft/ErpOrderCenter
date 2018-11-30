@@ -1,7 +1,7 @@
 <template>
     <div class="roleitem">
       <el-form-item label="权限" prop="type">
-         <el-checkbox-group v-model="role" @change="setReturnVal" >
+         <el-checkbox-group v-model="role" @change="setReturnVal"  size="small">
             <el-checkbox v-for="item in roles" :key="item.key" :value="item.id" :label="item.value" name="type"></el-checkbox>
             <el-checkbox label="管理员" name="type"></el-checkbox>
             <el-checkbox label="人员管理" name="type"></el-checkbox>
@@ -12,8 +12,8 @@
     </div>
 </template>
 <script>
-import basics from "@/config/basics";
-import request from "@/plugins/processor/request";
+import request from "@/utils/request"
+import basics from '@/utils/basics'
 export default {
   name: "roleitem",
   props: {
